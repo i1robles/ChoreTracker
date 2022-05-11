@@ -16,7 +16,8 @@ const char* ssid = "Andrew's Phone";
 const char* password = "lab5sucks";
 
 //Your Domain name with URL path or IP address with path
-String serverName = "http://192.168.67.122:6543/age/";
+//String serverName = "http://192.168.67.122:6543/age/"; //Andrew Wifi
+String serverName = "http://192.168.43.148:6543/age/"; //Merve Wifi
 
 // the following variables are unsigned longs because the time, measured in
 // milliseconds, will quickly become a bigger number than can be stored in an int.
@@ -72,7 +73,7 @@ void loop() {
     //Check WiFi connection status
     if(WiFi.status()== WL_CONNECTED){
       HTTPClient http;
-
+  
       String serverPath = serverName + "This_is_from_the_ESP32_Distance=" + String(distance);
       
       // Your Domain name with URL path or IP address with path
