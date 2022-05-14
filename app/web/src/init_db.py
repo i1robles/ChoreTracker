@@ -18,13 +18,17 @@ cursor = db.cursor()
 # # CAUTION!!! CAUTION!!! CAUTION!!! CAUTION!!! CAUTION!!! CAUTION!!! CAUTION!!!
 cursor.execute("drop table if exists Users;")
 
-# Create a TStudents table (wrapping it in a try-except is good practice)
+# Create a table for storing families and (wrapping it in a try-except is good practice)
 try:
   cursor.execute("""
     CREATE TABLE Users (
       id          integer  AUTO_INCREMENT PRIMARY KEY,
-      first_name  VARCHAR(30) NOT NULL,
-      last_name   VARCHAR(30) NOT NULL,
+      username  VARCHAR(30) NOT NULL,
+      parent_name_1  VARCHAR(30) NOT NULL,
+      parent_name_2  VARCHAR(30) NOT NULL,
+      child_name   VARCHAR(30) NOT NULL,
+      chore       VARCHAR(30) NOT NULL,
+      chore_date  DATE,
       email       VARCHAR(50) NOT NULL,
       password    VARCHAR(20) NOT NULL,
       created_at  TIMESTAMP

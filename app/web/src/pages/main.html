@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Page Info -->
+    <title>ChoreTracker - Main</title>
+    <meta name="author" content="Ivan Robles">
+    <meta name="description" content="Chore Tracker Product">
+
+    <link rel="stylesheet" type="text/css" href="css/agile.css">
+
+    <!-- Add favicon -->
+    <link rel="icon" type="image/png" href="images/ChoreTrackerFav.png">
+
+    <!-- Scripts added at end of body -->
+  </head>
+
+  <body>
+
+    <!-- Header of Page -->
+    <div class='hero'>
+      <div class="left-hero">
+        <a href="/main">
+          <img class="chore-logo" src="images/ChoreTracker_Logo.png" alt="ChoreTracker Logo"
+            href="/main">
+        </a>
+        <a href="/main">
+          <img class="chore-words" src="images/ChoreTracker_W.png" alt="ChoreTracker"
+            href="/main">
+        </a>
+      </div>
+      <div class="right-hero">
+        <button id="menu-btn" title="Menu" class="btn">
+          <i class="fas fa-bars fa-x"></i>
+        </button>
+      </div>
+    </div>
+    <hr class="hero-line">
+    <!-- End of Header -->
+
+     
+    <div class="pages-bar">
+      <div class="pages">
+        <div class='tab_card bordered margin-none'> 
+          Calendar
+        </div>
+        <div class='tab_card bordered margin-none'> 
+          Children
+        </div>
+      </div>
+      <div class="main-buttons">
+        <button id="add-chore-btn" title="Add Chore" class="btn">
+          <i class="fas fa-plus-square fa-x"></i>
+        </button>
+        <button id="add-child-btn" title="Add Child" class="btn">
+          <i class="fas fa-user-plus fa-x"></i>
+        </button>
+        <button id="settings-btn" title="Settings" class="btn">
+          <i class="fas fa-cogs fa-x"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Contains the slide-out menu -->
+    <menu-list></menu-list>
+
+    <!-- Contains the pop up add chore box -->
+    <chore-box></chore-box>
+
+    <section class='padding-responsive full_height'> 
+
+      <section class='responsive_grid'>
+        <tbody id ="children_table"></tbody>
+        <tbody id ="chores_table"></tbody>
+      </section>
+    </section>
+
+
+    <!-- Bar to Scroll Back to Top of Current Page -->
+    <hr class="hero-line">
+    <div class="bottom-row">
+      <a href="#" class="btn no_underline">
+        <i class="fas fa-arrow-up fa-x" title="Back to Top"></i>
+      </a>
+    </div>
+
+      
+
+
+    <!-- Contains the footer : Copyright for app name -->
+  <footer>
+    <p class="copy-right">© ChoreTracker 2022</p>
+  </footer>
+
+  <!-- Import icons for buttons -->
+  <script src="https://kit.fontawesome.com/06c5daf794.js" crossorigin="anonymous"></script>
+
+  <!-- Import JS source files -->
+  <script type="module" src="js/main.js"></script>
+
+  <!-- No Script for when JS is not supported or disabled -->
+  <noscript>
+    <div>
+      <p>Sorry, either your browser does not support JavaScript, or it has been disabled...</p>
+    </div>
+  </noscript>
+
+  </body>
+</html>
