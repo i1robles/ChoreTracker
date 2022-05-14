@@ -19,6 +19,13 @@ function showCalendarView() {
       //make other button not clicked
       let o_child_view_btn = document.getElementById("child-view-btn");
       o_child_view_btn.classList.remove("clicked-btn");
+            
+      //display calendar view table
+      let o_cal_table = document.getElementById("cal_view_table");
+      o_cal_table.classList.remove("hidden");
+      //hide calendar table
+      let o_child_table = document.getElementById("child_view_table");
+      o_child_table.classList.add("hidden");
     } else {
       if (CONSOLE_BOOL) {
         console.log("Calendar View Already Displayed")
@@ -41,6 +48,13 @@ function showCalendarView() {
       //make other button not clicked
       let o_cal_view_btn = document.getElementById("cal-view-btn");
       o_cal_view_btn.classList.remove("clicked-btn");
+
+      //display children view table
+      let o_child_table = document.getElementById("child_view_table");
+      o_child_table.classList.remove("hidden");
+      //hide calendar table
+      let o_cal_table = document.getElementById("cal_view_table");
+      o_cal_table.classList.add("hidden");
     } else {
       if (CONSOLE_BOOL) {
         console.log("Child View Already Displayed")
