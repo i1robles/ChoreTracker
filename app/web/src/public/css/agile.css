@@ -524,10 +524,23 @@ label {
 /**
  * Hide
  */
- .hidden {
+.hidden {
   display: none;
 }
 
+.empty-space {
+  visibility: hidden;
+}
+
+.clicked-btn {
+  background-color: var(--page-color-lighter);
+}
+
+.clicked-btn:hover {
+  text-decoration: none;
+  border-color: var(--dark-color);
+  cursor: default;
+}
 
 /***************************
  * Styling Slide-out menu *
