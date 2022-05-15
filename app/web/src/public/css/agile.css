@@ -5,8 +5,8 @@
   --accent-color-darkest: rgb(88, 12, 12); */
   --para-start-color: rgb(197, 233, 255);
   --accent-color: rgb(92, 159, 201);
-  --accent-color-dark: rgb(69, 124, 184);
-  --accent-color-darkest: rgb(50, 74, 144);
+  --accent-color-dark: rgb(79, 138, 174);
+  --accent-color-darkest: rgb(52, 90, 114);
   --darker-color: rgb(83, 83, 83);
   --dark-color: rgb(126, 126, 126);
   --medium-color: #bbb;
@@ -142,10 +142,10 @@ h2, h3, h4, h5, h6 {
 }
 
 .pages-bar {
-  padding: 1rem;
+  padding: var(--padding-med) var(--padding-lg) 0;
   display: flex;
   justify-content: space-between;
-  margin: 0.25rem;
+  margin: var(--margin-med) var(--margin-sm) 0;
   align-items: center;
 }
 
@@ -232,7 +232,7 @@ input[type="email"], input[type="password"]{
 .tab_card {
   text-align: center;
   padding: var(--padding-med);
-  margin: var(--margin-sm);
+  margin: 0 var(--margin-sm);
   background: transparent;
   color: var(--light-color);
   width: 100%;
@@ -667,4 +667,40 @@ label {
 .menu_list_links a {
   display: block;
   color: var(--light-color);
+}
+
+.chores_table {
+  padding: 0 var(--padding-lg);
+  width: 100%;
+  border-spacing: var(--padding-lg);
+  font-size: calc(0.5rem + 1.5vw);
+}
+
+.chores_table th {
+  background-color: var(--accent-color-darkest);
+  padding: var(--padding-xl);
+  text-align: left;
+  padding-left: calc(1rem + 1vw);
+  border-radius: 2rem;
+}
+
+.chores_table th:first-child {
+  background-color: var(--accent-color-dark);
+  width: 65%;
+}
+
+.chores_table td {
+  background-color: var(--page-color-lighter);
+  padding: var(--padding-lg);
+  padding-left: calc(1.5rem + 2vw);
+  border-radius: 2rem;
+}
+
+.chores_table td:last-child {
+  text-align: center;
+  width: 10%;
+  padding: var(--padding-lg);
+}
+.empty_row {
+  visibility: hidden;
 }
