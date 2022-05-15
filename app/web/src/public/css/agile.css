@@ -686,7 +686,7 @@ label {
 
 .chores_table th:first-child {
   background-color: var(--accent-color-dark);
-  width: 65%;
+  width: 50%;
 }
 
 .chores_table td {
