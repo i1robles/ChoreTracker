@@ -5,15 +5,6 @@ from pyramid.response import FileResponse
 def get_home(req):
   return FileResponse("pages/index.html")
 
-def get_kvp(req):
-  return FileResponse("pages/kvp.html")
-
-def get_team(req):
-  return FileResponse("pages/team.html")
-
-def get_product_page(req):
-  return FileResponse("pages/product.html")
-
 def get_login_page(req):
   return FileResponse("pages/login.html")
   
@@ -29,21 +20,6 @@ if __name__ == '__main__':
     config.add_route('home', '/')
     # Directs the route to the function that can generate the view
     config.add_view(get_home, route_name='home')
-
-    # Adds key value proposition route in the website
-    config.add_route('kvp', '/kvp')
-    # Directs the route to the function that can generate the view
-    config.add_view(get_kvp, route_name='kvp')
-
-    # Adds key value proposition route in the website
-    config.add_route('team', '/team')
-    # Directs the route to the function that can generate the view
-    config.add_view(get_team, route_name='team')
-
-    # Adds key value proposition route in the website
-    config.add_route('product', '/product')
-    # Directs the route to the function that can generate the view
-    config.add_view(get_product_page, route_name='product')
 
     # Adds key value proposition route in the website
     config.add_route('login', '/login')

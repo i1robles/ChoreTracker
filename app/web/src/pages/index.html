@@ -33,82 +33,71 @@
             href="/">
         </a>
       </div>
-      <div class="right-hero">
-        <button id="start-btn" class="custom-btn">Get Started</button>
-        <a href="login">
-          <button id="user-btn" title="Login" class="btn">
-            <i class="fas fa-user fa-x"></i>
-          </button>
-        </a>
-        <button id="menu-btn" title="Menu" class="btn">
-          <i class="fas fa-bars fa-x"></i>
-        </button>
-      </div>
+      <div class="right-hero empty-space"></div>
     </div>
     <hr class="hero-line">
     <!-- End of Header -->
 
     <div class="pages-bar hidden">
-      <div class="pages hidden">
+      <div class="pages">
         <div class='tab_card bordered margin-none clicked-btn' id="cal-view-btn"> 
           Calendar
         </div>
         <div class='tab_card bordered margin-none' id="child-view-btn"> 
           Children
         </div>
+        <div class='tab_card bordered margin-none' id="sensor-view-btn"> 
+          Sensors
+        </div>
       </div>
-      <div class="main-buttons hidden">
+      <div class="main-buttons">
         <button id="add-chore-btn" title="Add Chore" class="btn">
           <i class="fas fa-plus-square fa-x"></i>
         </button>
         <button id="add-child-btn" title="Add Child" class="btn">
           <i class="fas fa-user-plus fa-x"></i>
         </button>
-        <button id="menu-btn" title="Settings" class="btn">
+        <button id="settings-btn" title="Settings" class="btn">
           <i class="fas fa-cogs fa-x"></i>
         </button>
       </div>
-    </div> 
-
-    <!-- Contains the slide-out menu -->
-    <menu-list></menu-list>
-
-    <section class='padding-responsive landing'> 
-
-      <section class='responsive_grid'>
-        <div class='landing-card margin-none'> 
-          The ChoreTracker is a collection of sensors that work together with our app
-          to make organizing, assigning, and tracking chores easy.
-          <ul>
-            <li>
-              Create recurring or one-time chores
-            </li>
-          </ul>
-          <ul>
-            <li>
-              Monitor chores and receive real-time updates
-            </li>
-          </ul>
-          <ul>
-            <li>
-              Reward your kids for a job well done
-            </li>
-          </ul> 
-        </div>
-        <div class='empty-card'></div>
-      </section>
-    </section>
-
-
-    <!-- Bar to Scroll Back to Top of Current Page -->
-    <hr class="hero-line">
-    <div class="bottom-row">
-      <a href="#" class="btn no_underline">
-        <i class="fas fa-arrow-up fa-x" title="Back to Top"></i>
-      </a>
     </div>
 
+    <section class="padding-responsive full_height">
+      <section class='responsive_grid'>
+        <div class='centered_card_two margin-none'> 
+          <div class='centered_card stack margin-none centered'>
+            Already a member? 
+          </div>
+          <div class='centered_card stack margin-none centered'>
+            Sign in below! 
+          </div>
+          <div class="centered">
+            <!--Change this link when users are implemented-->
+            <a href="login">
+              <input type="submit" value="Sign In" class="custom-btn-accent">
+            </a>
+          </div>
+        </div>
+
+
+        <div class='centered_card_two margin-none'> 
+          <div class='centered_card stack margin-none centered'>
+            New to ChoreTracker? 
+          </div>
+          <div class='centered_card stack margin-none centered'>
+            Join Us Now!
+          </div>
+          <div class="centered">
+            <!--Change this link when users are implemented-->
+            <a href="signUp">
+              <input type="submit" value="Create Account" class="custom-btn-accent">
+            </a>
+          </div>
+        </div>
       
+      </section>
+    </section>     
 
 
     <!-- Contains the footer : Copyright for app name -->

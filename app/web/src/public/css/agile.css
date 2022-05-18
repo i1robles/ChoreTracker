@@ -195,6 +195,18 @@ a:hover {
   display: block;
 }
 
+.centered_card_two {
+  padding: var(--padding-lg);
+  margin: var(--margin-xxl) auto;
+  background: var(--transparent);
+  color: var(--light-color);
+  width: 100%;
+  font-size: calc(1rem + 1vw);
+  display: block;
+}
+
+
+
 #login_card {
   max-width: 50vw;
 }
@@ -292,6 +304,7 @@ input[type="email"], input[type="password"]{
 
 .center-box {
   align-items: center;
+  text-align: center;
   padding: 0px calc(3rem + 3vw);
 }
 
@@ -329,8 +342,8 @@ label {
   border-radius: 20px;
   height: 40px;
   line-height: 1;
-  width: 150px;
-  font-size: 1rem;
+  width: calc(5rem + 4vw);
+  font-size: calc(0.5rem + 1vw);
   font-weight: 600;
   text-decoration: none;
   display: inline-block;
@@ -349,7 +362,34 @@ label {
 .custom-btn:hover {
   color: black;
   background-color: var(--light-color);
-}r
+}
+
+.custom-btn-accent {
+  border-radius: 1rem;
+  height: 3rem;
+  line-height: 1;
+  width: calc(12rem + 5vw);
+  font-size: calc(1rem + 1vw);
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  text-align: center;
+  margin: 10px;
+  border: 2px solid;
+}
+
+.custom-btn-accent {
+  border-color: var(--accent-color);
+  color: var(--light-color);
+  background-color: var(--accent-color);
+}
+
+.custom-btn-accent:hover {
+  color: black;
+  background-color: var(--light-color);
+  border-color: var(--light-color);
+}
 
 
 /* horizontal line with text label */
@@ -397,6 +437,32 @@ label {
   .half_page_image {
     max-width: 80vw;
   }
+
+  .centered_card_two {
+    margin: var(--margin-sm);
+    width: 70vw;
+    min-width: none;
+    padding: 0;
+  }
+
+  .centered {
+    width: 100%;
+  }
+
+  .stack {
+    padding: 0;
+  }
+
+  .custom-btn-accent {
+    width: calc(7rem + 5vw);
+    font-size: calc(0.75rem + 1vw);
+  }
+
+  .centered_card {
+    font-size: calc(0.75rem + 1vw);
+    width: 70vw;
+  }
+
 }
 
 .pages-bar a {
@@ -513,6 +579,10 @@ label {
   padding: 0 10%;
 }
 
+#nav_list {
+  margin-top: calc(1rem + 2vw);
+}
+
 #nav_list a {
   margin: var(--margin-lg);
 }
@@ -543,7 +613,7 @@ label {
 }
 
 /***************************
- * Styling Slide-out menu *
+ * Styling Pop Up Chore Box *
  ***************************/
 
 /**
@@ -632,20 +702,27 @@ label {
  * Style close button for side modal pop ups
  */
 .close-side {
-   text-align: right;
+  position: absolute;
+  right: calc(0.2rem + 1.5vw);
 }
 
-/* .close-side::before {
-  position: absolute;
-  content: " ";
-  display: block;
-  height: 2px;
-  background: var(--dark-color);
-  width: 70%;
-  top: 6%;
-  right: 20%;
-} */
 
+/**
+ * Style close button for side modal pop ups
+ */
+ .close-side:hover {
+  color: red;
+  text-decoration: none;
+}
+
+
+/**
+ * Style close button for centered modal pop ups
+ */
+ .close-center:hover {
+  color: red;
+  text-decoration: none;
+}
 
 /*****************************
   * Color for Slide-out Menu *
@@ -704,3 +781,80 @@ label {
 .empty_row {
   visibility: hidden;
 }
+
+
+/***************************
+ * Styling Pop Up Child Box *
+ ***************************/
+
+/**
+ * Container for slide-out menu mask
+ */
+ .add-child-section-blocker {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 2;
+}
+
+/**
+ * Container for slide-out menu when closed
+ */
+.add-child-section {
+  overflow: hidden;
+  position: fixed;
+  transition: 0.3s;
+  width: 0;
+  height: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  z-index: 2;
+  border-radius: 1rem;
+  box-shadow: 10px black;
+}
+
+/**
+ * Container for slide-out menu when open
+ */
+.add-child-section-open {
+  width: 50%;
+  height: 90vh;
+  border-width: 2px;
+  overflow-y: auto;
+}
+
+
+/**************************
+ * Color for Add Chores Box *
+ **************************/
+
+.add-child-section-blocker {
+  background-color: var(--dark-transparent);
+}
+  
+.add-child-section {
+  background-color: var(--page-color-light);
+  color: var(--light-color);
+}
+
+#add-child-top {
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  margin: 0.25rem;
+  align-items: center;
+}
+
+.add-child-header {
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  font-size: calc(1.5rem + 1vw);
+  color: var(--light-color);
+}
+

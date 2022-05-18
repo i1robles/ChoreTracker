@@ -22,6 +22,7 @@
 
         let o_close_button = document.createElement("a");
         o_close_button.classList.add("close-center", "btn");
+        o_close_button.title = "Close Add Chore Box";
         o_close_button.innerHTML = "&times;";
         o_close_button.addEventListener("click", this.closeAddChore.bind(this));
 
@@ -77,40 +78,7 @@
     }
 }
 
-/**
- * Array storing  related to the task-list
- * @static
- * @type {string[]}
- */
-ChoreBox.A_TASK_INST = ["Click on the task list button and add all tasks you want to do",
-    "Tasks can only be added before starting the Pomodoro session to limit distractions while you work",
-    "Once the session begins, you can see the current and the next tasks",
-    "If you are done with a task, hit the 'check' button"];
 
-/**
- * Array storing  related to the work-break cycle
- * @static
- * @type {string[]}
- */
-ChoreBox.A_CYCLE_INST = ["One Pomodoro = 25 minutes of work/studying",
-    "Once you start, the timer won’t stop until you finish!",
-    "Take a 5-minute break after every Pomo and a 30-minute break after every 4 Pomos",
-    "If you get distracted, click “Restart” to restart the current interval",
-    "Have other things to do? Hit “End Session” to log out"];
-
-/**
- * String describing the Pomodoro Technique
- * @static
- * @type {String}
- */
-ChoreBox.S_POMO_INST = "The Pomodoro technique is a scientifically proven way to help increase productivity. Ultimately, people are more productive by taking small mental breaks. PomoHero automates the process for you, making it easier for you to reduce distractions and focus on your work.";
-
-/**
- * String describing the site's hotkeys
- * @static
- * @type {String}
- */
-ChoreBox.S_HOTKEYS_INST = "c - color change, t - tasklist, esc - close pop-up, space - start/end session, n - next task";
 
 customElements.define("chore-box", ChoreBox);
 

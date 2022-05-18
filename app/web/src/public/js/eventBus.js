@@ -1,4 +1,3 @@
-//import { TimerContainer } from "./timerContainer.js";
 const CONSOLE_BOOL = true;
 
 /**
@@ -14,6 +13,7 @@ class EventBus {
         this.o_bus = document.createElement("div");
         this.o_menu_list = document.querySelector("menu-list");
         this.o_add_chore_box = document.querySelector("chore-box");
+        this.o_add_child_box = document.querySelector("child-box");
         this.registerEvents();
     }
 
@@ -24,6 +24,7 @@ class EventBus {
         this.registerEvent("closeWindows", this.handleCloseWindows.bind(this));
         this.registerEvent("showMenu", this.handleShowMenu.bind(this));
         this.registerEvent("showAddChore", this.handleShowAddChore.bind(this));
+        this.registerEvent("showAddChild", this.handleShowAddChild.bind(this));
     }
 
 
@@ -51,6 +52,7 @@ class EventBus {
     handleCloseWindows() {
         this.o_menu_list.closeMenuList();
         this.o_add_chore_box.closeAddChore();
+        this.o_add_child_box.closeAddChild();
     }
 
     /**
@@ -76,6 +78,19 @@ class EventBus {
         this.o_add_chore_box.showAddChore();
         if (CONSOLE_BOOL) {
             console.log("eventBus.js - handleShowAddChore");
+        }
+    }
+
+    /**
+     * Event Handler function for the 'showAddChore' event
+     */
+     handleShowAddChild() {
+        // if (this.o_menu_list.getIsShown()) {
+        //     this.o_menu_list.closeMenuList();
+        // }
+        this.o_add_child_box.showAddChild();
+        if (CONSOLE_BOOL) {
+            console.log("eventBus.js - handleShowAddChild");
         }
     }
 

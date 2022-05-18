@@ -24,19 +24,19 @@
     <!-- Header of Page -->
     <div class='hero'>
       <div class="left-hero">
-        <a href="/">
+        <a href="/main">
           <img class="chore-logo" src="images/ChoreTracker_LogoColor.png" alt="ChoreTracker Logo"
-            href="/">
+            href="/main">
         </a>
-        <a href="/">
+        <a href="/main">
           <img class="chore-words" src="images/ChoreTracker_WColor.png" alt="ChoreTracker"
-            href="/">
+            href="/main">
         </a>
       </div>
-      <div class="right-hero empty-space">
-        <button id="menu-btn" title="Menu" class="btn">
-          <i class="fas fa-bars fa-x"></i>
-        </button>
+      <div class="right-hero">
+        <a href="/">
+          <button id="start-btn" class="custom-btn">Sign Out</button>
+        </a>
       </div>
     </div>
     <hr class="hero-line">
@@ -51,6 +51,9 @@
         <div class='tab_card bordered margin-none' id="child-view-btn"> 
           Children
         </div>
+        <div class='tab_card bordered margin-none' id="sensor-view-btn"> 
+          Sensors
+        </div>
       </div>
       <div class="main-buttons">
         <button id="add-chore-btn" title="Add Chore" class="btn">
@@ -59,17 +62,20 @@
         <button id="add-child-btn" title="Add Child" class="btn">
           <i class="fas fa-user-plus fa-x"></i>
         </button>
-        <button id="settings-btn" title="Settings" class="btn">
+        <button id="menu-btn" title="Settings" class="btn">
           <i class="fas fa-cogs fa-x"></i>
         </button>
       </div>
     </div>
 
-    <!-- Contains the slide-out menu -->
+    <!-- Contains the pop up add chore box -->
     <menu-list></menu-list>
 
     <!-- Contains the pop up add chore box -->
     <chore-box></chore-box>
+
+    <!-- Contains the pop up add child box -->
+    <child-box></child-box>
 
     <section class='padding-responsive full_height'> 
       <table id ="cal_view_table" class="chores_table">
@@ -141,7 +147,36 @@
         </tr>
         <!--Empty space at end of every section-->
         <tr><td class="empty_row"></td></tr>
+      </table>
 
+      <table id ="sensor_view_table" class="chores_table hidden">
+        <tr>
+          <th>Sensor Chores</th>
+          <th>Next Assigned</th>
+          <th>Status</th>
+        </tr>
+        <tr>
+          <td>Sink Dishes</td>
+          <td>Merve</td>
+          <td>75%</td>
+        </tr>
+        <tr>
+          <td>Andrew's Bed</td>
+          <td>Andrew</td>
+          <td>Done</td>
+        </tr>
+        <tr>
+          <td>Kitchen Trash</td>
+          <td>Julia</td>
+          <td>60%</td>
+        </tr>
+        <tr>
+          <td>Andrew's Laundry</td>
+          <td>Andrew</td>
+          <td>25%</td>
+        </tr>
+        <!--Empty space at end of every section-->
+        <tr><td class="empty_row"></td></tr>
       </table>
     </section>
 
