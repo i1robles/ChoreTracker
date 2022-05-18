@@ -1,56 +1,24 @@
 from wsgiref.simple_server import make_server
 from pyramid.config import Configurator
 from pyramid.response import Response, FileResponse
-import mysql.connector as mysql
-from dotenv import load_dotenv
-import os
- 
-load_dotenv('credentials.env')
- 
-''' Environment Variables '''
-db_host = os.environ['MYSQL_HOST']
-db_user = os.environ['MYSQL_USER']
-db_pass = os.environ['MYSQL_PASSWORD']
-db_name = os.environ['MYSQL_DATABASE']
-
 
 def get_vals(req):
-  age = req.matchdict['age_id']
-  #height = req.matchdict['height_id']
-  print(age)
-  #print(age)
-  #print(height)
- 
-  #connect to the database
-  
-  #db = mysql.connect(host=db_host, user=db_user, passwd=db_pass, database=db_name)
-  #cursor = db.cursor()
- 
-  #query the database with the id
-  #####cursor.execute("SELECT id,name,designation,email FROM Gellery_details WHERE id='%s';" %id)
-  #record = cursor.fetchone()
-  #db.close()
- 
-#   response = {
-#     'id':           record[0],
-#     'name':         record[1],
-#     'designation':  record[2],
-#     'email':        record[3]
-#   }
-#   return response
-
+  data = req.matchdict['chore_data']
+  datasp = data.split('-')
+  distance = datasp[0]
+  sheet = datasp[1]
+  print(distance)
+  print(sheet)
+  return True
 
 def get_home(req):
-  return FileResponse("index.html")
+  return FileResponse("ECE140B_Test_Server/index.html")
 
  
 if __name__ == '__main__':
   with Configurator() as config:
-    config.add_route('get_vals','/age/{age_id}')
+    config.add_route('get_vals','/chores/{chore_data}')
     config.add_view(get_vals, route_name='get_vals', renderer='json')
-    
-    config.add_route('get_height','/height/{height_id}')
-    config.add_view(get_vals, route_name='get_height', renderer='json')
     
     config.add_route('home', '/')
     config.add_view(get_home, route_name='home')
