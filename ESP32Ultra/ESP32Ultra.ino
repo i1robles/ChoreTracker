@@ -1,3 +1,4 @@
+
 /*
   Rui Santos
   Complete project details at Complete project details at https://RandomNerdTutorials.com/esp32-http-get-post-arduino/
@@ -12,12 +13,16 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
 
-const char* ssid = "Andrew's Phone";
-const char* password = "lab5sucks";
+// const char* ssid = "Andrew's Phone";
+// const char* password = "lab5sucks";
+
+const char* ssid = "it's what it's";
+const char* password = "they're over there";
 
 //Your Domain name with URL path or IP address with path
-//String serverName = "http://192.168.67.122:6543/age/"; //Andrew Wifi
-String serverName = "http://192.168.43.148:6543/age/"; //Merve Wifi
+//String serverName = "http://192.168.67.122:6543/chores/"; //Andrew Wifi
+//String serverName = "http://192.168.43.148:6543/chores/"; //Merve Wifi
+String serverName = "http://192.168.1.24:6543/chores/";
 
 // the following variables are unsigned longs because the time, measured in
 // milliseconds, will quickly become a bigger number than can be stored in an int.
@@ -31,6 +36,9 @@ unsigned long timerDelay = 5000;
 // defines pins numbers
 const int trigPin = 12;
 const int echoPin = 13;
+const int ledPin = 14;
+const int switchPin = 15;
+String state = "";
 long duration;
 int distance;
 
@@ -38,18 +46,20 @@ void setup() {
 
   pinMode(trigPin, OUTPUT); // Sets the trigPin as an Output
   pinMode(echoPin, INPUT); // Sets the echoPin as an Input
-  Serial.begin(115200); 
+  pinMode(ledPin, OUTPUT);
+  pinMode(switchPin, INPUT_PULLUP);
+  Serial.begin(115200);
 
   WiFi.begin(ssid, password);
   Serial.println("Connecting");
-  while(WiFi.status() != WL_CONNECTED) {
+  while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
   }
   Serial.println("");
   Serial.print("Connected to WiFi network with IP Address: ");
   Serial.println(WiFi.localIP());
- 
+
   Serial.println("Timer set to 5 seconds (timerDelay variable), it will take 5 seconds before publishing the first reading.");
 }
 
@@ -66,23 +76,33 @@ void loop() {
   // Calculating the distance
   distance = duration * 0.034 / 2;
 
+  //read the pushbutton value into a variable
+  int sensorVal = digitalRead(switchPin);
+  if (sensorVal == HIGH) {
+    digitalWrite(ledPin, HIGH);
+    state = "open";
+  }
+  else {
+    digitalWrite(ledPin, LOW);
+    state = "closed";
+  }
 
-  
+
   //Send an HTTP POST request every 5 second
   if ((millis() - lastTime) > timerDelay) {
     //Check WiFi connection status
-    if(WiFi.status()== WL_CONNECTED){
+    if (WiFi.status() == WL_CONNECTED) {
       HTTPClient http;
-  
-      String serverPath = serverName + "This_is_from_the_ESP32_Distance=" + String(distance);
-      
+
+      String serverPath = serverName + String(distance) + "-" + state;
+
       // Your Domain name with URL path or IP address with path
       http.begin(serverPath.c_str());
-      
+
       // Send HTTP GET request
       int httpResponseCode = http.GET();
-      
-      if (httpResponseCode>0) {
+
+      if (httpResponseCode > 0) {
         Serial.print("HTTP Response code: ");
         Serial.println(httpResponseCode);
         String payload = http.getString();
