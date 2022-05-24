@@ -2,6 +2,18 @@ from wsgiref.simple_server import make_server
 from pyramid.config import Configurator
 from pyramid.response import Response, FileResponse
 
+import mysql.connector as mysql
+from dotenv import load_dotenv
+import os
+ 
+load_dotenv('credentials.env')
+ 
+''' Environment Variables '''
+db_host = os.environ['MYSQL_HOST']
+db_user = os.environ['MYSQL_USER']
+db_pass = os.environ['MYSQL_PASSWORD']
+db_name = os.environ['MYSQL_DATABASE']
+
 def get_vals(req):
   data = req.matchdict['chore_data']
   datasp = data.split('-')
