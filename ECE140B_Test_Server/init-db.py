@@ -36,8 +36,8 @@ try:
       id          INT NOT NULL,
       choreName   VARCHAR(50) NOT NULL,
       userName    VARCHAR(50) NOT NULL,
-      dueDate     DATE NOT NULL,
-      doneDate    DATE NOT NULL,
+      dueDate     DATETIME DEFAULT 0,
+      doneDate    DATETIME DEFAULT 0,
       completed   BOOLEAN NOT NULL,   
       points      INT NOT NULL
     );
@@ -47,11 +47,21 @@ try:
       id          INT AUTO_INCREMENT PRIMARY KEY,
       choreName   VARCHAR(50) NOT NULL,   
       status      INT NOT NULL,
-      time        DATETIME NOT NULL
+      time        DATETIME DEFAULT 0
     );
   """)
   db.commit()
 except RuntimeError as err:
   print("runtime error: {0}".format(err))
   
+
+cursor.execute("INSERT INTO Users VALUES ('Andrew', 1000, 1234);")
+cursor.execute("INSERT INTO Users VALUES ('Ivan', 1000, 5678);")
+cursor.execute("INSERT INTO Users VALUES ('Julia', 1000, 9999);")
+cursor.execute("INSERT INTO Users VALUES ('Merve', 1000, 0000);")
+
+cursor.execute("INSERT INTO Chores (choreName, status) VALUES ('Laundry', 0);")
+cursor.execute("INSERT INTO Chores (choreName, status) VALUES ('Trash', 0);")
+cursor.execute("INSERT INTO Chores (choreName, status) VALUES ('Bed', 0);")
+cursor.execute("INSERT INTO Chores (choreName, status) VALUES ('Dishes', 0);")
 db.commit()
