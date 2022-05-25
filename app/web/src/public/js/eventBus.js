@@ -25,6 +25,8 @@ class EventBus {
         this.registerEvent("showMenu", this.handleShowMenu.bind(this));
         this.registerEvent("showAddChore", this.handleShowAddChore.bind(this));
         this.registerEvent("showAddChild", this.handleShowAddChild.bind(this));
+        this.registerEvent("createChore", this.handleCreateChore.bind(this));
+        this.registerEvent("createChild", this.handleCreateChild.bind(this));
     }
 
 
@@ -80,6 +82,16 @@ class EventBus {
             console.log("eventBus.js - handleShowAddChore");
         }
     }
+    
+    /**
+     * Event Handler function for the 'createChore' event
+     */
+     handleCreateChore() {
+        this.o_add_chore_box.createChore();
+        if (CONSOLE_BOOL) {
+            console.log("eventBus.js - handleCreateChore");
+        }
+    }
 
     /**
      * Event Handler function for the 'showAddChore' event
@@ -91,6 +103,16 @@ class EventBus {
         this.o_add_child_box.showAddChild();
         if (CONSOLE_BOOL) {
             console.log("eventBus.js - handleShowAddChild");
+        }
+    }
+    
+    /**
+     * Event Handler function for the 'createChild' event
+     */
+     handleCreateChild() {
+        this.o_add_child_box.createChild();
+        if (CONSOLE_BOOL) {
+            console.log("eventBus.js - handleCreateChild");
         }
     }
 

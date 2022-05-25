@@ -36,9 +36,62 @@
         o_child_title.classList.add("add-child-header");
         o_child_title.innerText = "Add Child";
 
-        
 
-        o_child_title_wrapper.append(o_child_title, o_close_button);
+
+        //Chore Box inputs
+        let o_form_wrapper = document.createElement("form");
+        o_form_wrapper.classList.add("input-form");
+
+        //Add child name
+        let o_child_input_wrapper = document.createElement("div");
+        o_child_input_wrapper.classList.add("custom-input-wrapper");
+
+        let o_child_label = document.createElement("label")
+        o_child_label.innerText = "First Name:";
+        o_child_label.classList.add("medium_message");
+        o_child_label.setAttribute("for", "add-child-input");
+        let o_child_input = document.createElement("input");
+        o_child_input.classList.add("custom-input");
+        o_child_input.setAttribute("type", "type");
+        o_child_input.id = "add-child-input";
+        o_child_input.placeholder = "Enter Name..."
+
+        o_child_input_wrapper.append(o_child_label, o_child_input);
+
+        //Select child's birthday
+        let o_date_input_wrapper = document.createElement("div");
+        o_date_input_wrapper.classList.add("custom-input-wrapper");
+
+        let o_date_label = document.createElement("label")
+        o_date_label.innerText = "Date of Birth:";
+        o_date_label.classList.add("medium_message");
+        o_date_label.setAttribute("for", "birthdate-input");
+        let o_date_input = document.createElement("input");
+        o_date_input.classList.add("custom-input");
+        o_date_input.setAttribute("type", "date");
+        o_date_input.id = "birthdate-input";
+        //Make sure birthday is before today
+        let o_today = new Date().toLocaleDateString('en-ca');
+        o_date_input.max = o_today;
+        o_date_input.value = o_today;
+
+        o_date_input_wrapper.append(o_date_label, o_date_input);
+
+        //Submit button (adds to database)
+        let o_submit_input_wrapper = document.createElement("div");
+        o_submit_input_wrapper.classList.add("custom-input-wrapper");
+
+        let o_submit_input = document.createElement("input");
+        o_submit_input.setAttribute("type", "submit");
+        o_submit_input.classList.add("custom-btn");
+        o_submit_input.id = "submit-child-input";
+        o_submit_input.title = "Create Child";
+
+        o_submit_input_wrapper.append(o_submit_input);
+
+
+        o_form_wrapper.append(o_child_input_wrapper, o_date_input_wrapper, o_submit_input_wrapper);
+        o_child_title_wrapper.append(o_child_title, o_close_button, o_form_wrapper);
         o_wrapper_obj.append(o_child_title_wrapper);
         this.append(o_wrapper_obj_back);
         this.append(o_wrapper_obj);
@@ -75,6 +128,13 @@
         // this.querySelector("#instructions-para").style.display = "none";
         this.querySelector("#add-child-blocker").style.display = "none";
         this.querySelector("#add-child-top").style.display = "none";
+    }
+
+    /**
+     * Function to create child and add it to database
+     */
+     createChild() {
+        console.log("Creating Child");
     }
 }
 

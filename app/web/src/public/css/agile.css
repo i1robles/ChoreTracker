@@ -326,12 +326,16 @@ input[type="email"], input[type="password"]{
   color: white;
 }
 
+label {
+  font-size: calc(0.5rem + 0.5vw);
+}
+
 .small-message {
   font-size: calc(0.5rem + 0.5vw);
 }
 
-label {
-  font-size: calc(0.5rem + 0.5vw);
+.medium-message {
+  font-size: calc(1rem + 0.5vw);
 }
 
 .item-header {
@@ -440,7 +444,7 @@ label {
 
   .centered_card_two {
     margin: var(--margin-sm);
-    width: 70vw;
+    width: 100%;
     min-width: none;
     padding: 0;
   }
@@ -463,6 +467,18 @@ label {
     width: 70vw;
   }
 
+  .responsive_grid {
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+  }
+
+}
+
+@media screen and (max-width: 400px) {
+  #responsive_grid_index {
+    margin-top: calc(2rem + 1vw);
+  }
 }
 
 .pages-bar a {
@@ -651,8 +667,8 @@ label {
  * Container for slide-out menu when open
  */
 .add-chore-section-open {
-  width: 80%;
-  height: 90vh;
+  width: 50%;
+  height: 80vh;
   border-width: 2px;
   overflow-y: auto;
 }
@@ -663,7 +679,7 @@ label {
  **************************/
 
 .add-chore-section-blocker {
-  background-color: var(--dark-transparent);
+  background-color: var(--dark-less-transparent);
 }
   
 .add-chore-section {
@@ -816,6 +832,7 @@ label {
   z-index: 2;
   border-radius: 1rem;
   box-shadow: 10px black;
+  color: var(--light-color);
 }
 
 /**
@@ -823,7 +840,7 @@ label {
  */
 .add-child-section-open {
   width: 50%;
-  height: 90vh;
+  height: 70vh;
   border-width: 2px;
   overflow-y: auto;
 }
@@ -834,7 +851,7 @@ label {
  **************************/
 
 .add-child-section-blocker {
-  background-color: var(--dark-transparent);
+  background-color: var(--dark-less-transparent);
 }
   
 .add-child-section {
@@ -858,3 +875,36 @@ label {
   color: var(--light-color);
 }
 
+.input-form {
+  font-size: calc(0.5rem + 1.5vw);
+  padding: calc(1rem + 1vw);
+}
+
+.input-form label {
+  font-size: calc(1rem + 0.5vw);
+}
+
+
+.custom-input-wrapper {
+  text-align: center;
+  padding: var(--padding-lg);
+  margin: var(--margin-lg);
+}
+
+.custom-input {
+  background-color: transparent;
+  color: var(--light-color);
+  font-size: calc(0.5rem + 1.5vw);
+  margin: var(--margin-sm);
+  width: 50%;
+}
+
+.custom-input-option {
+  background-color: var(--page-color-lighter);
+  color: var(--light-color);
+}
+
+
+.copy-right {
+  text-align: center;
+}

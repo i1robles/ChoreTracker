@@ -123,10 +123,24 @@ function showMenuList() {
 }
 
 /**
+ * Event handler function to show the Add Chore Box when the add chore button is pressed
+ */
+ function createChore() {
+  document.EventBus.fireEvent("createChore");
+}
+
+/**
  * Event handler function to show the Add Child Box when the add child button is pressed
  */
  function showAddChild() {
   document.EventBus.fireEvent("showAddChild");
+}
+
+/**
+ * Event handler function to show the Add Chore Box when the add chore button is pressed
+ */
+ function createChild() {
+  document.EventBus.fireEvent("createChild");
 }
 
 /**
@@ -157,6 +171,14 @@ document.addEventListener("DOMContentLoaded", () => {
     // Code for showing / hiding Calendar View
     let o_sensor_view_btn = document.getElementById("sensor-view-btn");
     o_sensor_view_btn.addEventListener("click", showSensorView);
+
+    // Code for adding chore
+    let o_submit_chore_btn = document.getElementById("submit-chore-input");
+    o_submit_chore_btn.addEventListener("click", createChore);
+
+    // Code for adding child
+    let o_submit_child_btn = document.getElementById("submit-child-input");
+    o_submit_child_btn.addEventListener("click", createChild);
 
     
     if (CONSOLE_BOOL) {
