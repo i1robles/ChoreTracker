@@ -78,6 +78,29 @@
     <child-box></child-box>
 
     <section class='padding-responsive full_height'> 
+
+      <table class='margin-top-xl'>
+        <thead>
+          <tr>
+            <th class='small'> Child Name </th>
+            <th class='medium'> Points </th>
+            <th class='large'> Email </th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in names %}
+          <tr>
+            <td> {{user[0]}} </td>
+            <td> {{user[1]}} </td>
+            <td> No Email </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+
+
+
       <table id ="cal_view_table" class="chores_table">
         <tr>
           <th>Monday</th>
