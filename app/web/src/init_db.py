@@ -1,3 +1,6 @@
+# lNOTICE: This version of the file is for testing. In reality, we would need each 
+# family account to be creating their own tables
+
 # Import MySQL Connector Driver
 import mysql.connector as mysql
 
@@ -17,39 +20,127 @@ cursor = db.cursor()
 
 # # CAUTION!!! CAUTION!!! CAUTION!!! CAUTION!!! CAUTION!!! CAUTION!!! CAUTION!!!
 cursor.execute("drop table if exists Users;")
+cursor.execute("drop table if exists username_users;")
+cursor.execute("drop table if exists username_chore_options;")
+cursor.execute("drop table if exists username_assigned;")
+cursor.execute("drop table if exists username_backlog;")
+cursor.execute("drop table if exists username_redeemed;")
+# # CAUTION!!! CAUTION!!! CAUTION!!! CAUTION!!! CAUTION!!! CAUTION!!! CAUTION!!!
 
-# Create a table for storing families and (wrapping it in a try-except is good practice)
+# Create a table for storing families
 try:
   cursor.execute("""
-    CREATE TABLE Users (
-      id          integer  AUTO_INCREMENT PRIMARY KEY,
-      username  VARCHAR(30) NOT NULL,
-      parent_name_1  VARCHAR(30) NOT NULL,
-      parent_name_2  VARCHAR(30) NOT NULL,
-      child_name   VARCHAR(30) NOT NULL,
-      chore       VARCHAR(30) NOT NULL,
-      chore_date  DATE,
-      email       VARCHAR(50) NOT NULL,
-      password    VARCHAR(20) NOT NULL,
-      created_at  TIMESTAMP
+    CREATE TABLE username_users (
+      child_name     VARCHAR(30) NOT NULL,
+      child_points   INTEGER  NOT NULL,
+      birth_date     DATE,
+      pin            CHAR(4) 
     );
   """)
 except:
-  print("Users table already exists. Not recreating it.")
+  print("username_users table already exists. Not recreating it.")
 
-# Insert Records
-query = "insert into Users (first_name, last_name, email, password, created_at) values (%s, %s, %s, %s, %s)"
+# Create a table for storing chore options
+try:
+  cursor.execute("""
+    CREATE TABLE username_chore_options (
+      chore_name     VARCHAR(30) NOT NULL,
+      chore_points   INTEGER  NOT NULL,
+      status         VARCHAR(4) 
+    );
+  """)
+except:
+  print("username_chore_options table already exists. Not recreating it.")
+
+# Create a table for storing active chores
+try:
+  cursor.execute("""
+    CREATE TABLE username_assigned (
+      child_name     VARCHAR(30) NOT NULL,
+      chore_name     VARCHAR(30) NOT NULL,
+      chore_points   INTEGER  NOT NULL,
+      due_date       DATE NOT NULL
+    );
+  """)
+except:
+  print("username_assigned table already exists. Not recreating it.")
+
+# Create a table for storing backlog of chores
+try:
+  cursor.execute("""
+    CREATE TABLE username_backlog (
+      child_name     VARCHAR(30) NOT NULL,
+      chore_name     VARCHAR(30) NOT NULL,
+      chore_points   INTEGER  NOT NULL,
+      due_date       DATE NOT NULL,
+      complete_date  DATE NOT NULL
+    );
+  """)
+except:
+  print("username_backlog table already exists. Not recreating it.")
+
+# Create a table for storing backlog of points redeemed
+try:
+  cursor.execute("""
+    CREATE TABLE username_redeemed (
+      child_name     VARCHAR(30) NOT NULL,
+      redeem_points   INTEGER  NOT NULL,
+      redeem_date  DATE NOT NULL
+    );
+  """)
+except:
+  print("username_redeemed table already exists. Not recreating it.")
+
+# Insert Records of a family
+query = "insert into username_users (child_name, child_points, birth_date, pin) values (%s, %s, %s, %s)"
 values = [
-  ('rick','gessner','rick@gessner.com', 'abc123', '2020-02-20 12:00:00'),
-  ('ramsin','khoshabeh','ramsin@khoshabeh.com', 'abc123', '2020-02-20 12:00:00'),
-  ('al','pisano','al@pisano.com', 'abc123', '2020-02-20 12:00:00'),
-  ('truong','nguyen','truong@nguyen.com', 'abc123', '2020-02-20 12:00:00')
+  ('Parent', '0', '1998-12-06 12:00:00', '1234'),
+  ('Julia', '0', '1998-12-06 12:00:00', 'NULL'),
+  ('Merve', '0', '1998-12-06 12:00:00', 'NULL'),
+  ('Andrew', '0', '1998-12-06 12:00:00', 'NULL')
+]
+cursor.executemany(query, values)
+db.commit()
+
+# Insert Records of chore options
+query = "insert into username_chore_options (chore_name, chore_points, status) values (%s, %s, %s)"
+values = [
+  ('Take Out Trash', '10', 'NULL'),
+  ('Do Your Homework', '10', 'NULL'),
+  ('Clean Your Room', '10', 'NULL'),
+  ('Do The Dishes', '20', 'NULL'),
+  ('Do Your Laundry', '20', 'NULL'),
+  ('Sweep The Floor', '20', 'NULL'),
+  ('Vaccuum The Carpet', '50', 'NULL'),
+  ('Mow The Lawn', '50', 'NULL')
+]
+cursor.executemany(query, values)
+db.commit()
+
+# Insert Records of chore assigned now
+query = "insert into username_assigned (child_name, chore_name, chore_points, due_date) values (%s, %s, %s, %s)"
+values = [
+  ('Parent', 'Mow The Lawn', '50', '2022-07-03 12:00:00'),
+  ('Julia', 'Take Out Trash', '10', '2022-07-03 12:00:00'),
+  ('Julia', 'Do Your Homework', '10', '2022-07-04 12:00:00'),
+  ('Merve', 'Clean Your Room', '10', '2022-07-05 12:00:00'),
+  ('Merve', 'Do The Dishes', '20', '2022-07-04 12:00:00'),
+  ('Andrew', 'Take Out Trash', '10', '2022-07-05 12:00:00'),
+  ('Andrew', 'Do Your Laundry', '20', '2022-07-07 12:00:00')
 ]
 cursor.executemany(query, values)
 db.commit()
 
 # Selecting Records
-cursor.execute("select * from Users;")
-print('---------- DATABASE INITIALIZED ----------')
+cursor.execute("select child_name from username_users;")
+print('---------- USERNAME USERS ----------')
+[print(x) for x in cursor]
+# Selecting Records
+cursor.execute("select chore_name, chore_points from username_chore_options;")
+print('---------- CHORE OPTIONS ----------')
+[print(x) for x in cursor]
+# Selecting Records
+cursor.execute("select * from username_assigned;")
+print('---------- ASSIGNED CHORES ----------')
 [print(x) for x in cursor]
 db.close()
