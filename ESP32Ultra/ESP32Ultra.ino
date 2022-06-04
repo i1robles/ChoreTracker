@@ -13,16 +13,16 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
 
-// const char* ssid = "Andrew's Phone";
-// const char* password = "lab5sucks";
+ const char* ssid = "Andrew's Phone";
+ const char* password = "lab5sucks";
 
-const char* ssid = "it's what it's";
-const char* password = "they're over there";
+//const char* ssid = "it's what it's";
+//const char* password = "they're over there";
 
 //Your Domain name with URL path or IP address with path
-//String serverName = "http://192.168.67.122:6543/chores/"; //Andrew Wifi
+String serverName = "http://192.168.187.207:6543/chores/"; //Andrew Wifi
 //String serverName = "http://192.168.43.148:6543/chores/"; //Merve Wifi
-String serverName = "http://192.168.1.24:6543/chores/";
+//String serverName = "http://192.168.1.24:6543/chores/";
 
 // the following variables are unsigned longs because the time, measured in
 // milliseconds, will quickly become a bigger number than can be stored in an int.
