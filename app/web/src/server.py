@@ -30,6 +30,12 @@ def get_main_page(req):
   # return render_to_response('pages/main.html', {'names': names}, request=req)
   return FileResponse("pages/main.html")
 
+def get_vals(req):
+  data = req.matchdict['chore_data']
+
+  print(data)
+  return True
+  
 if __name__ == '__main__':
   with Configurator() as config:
     # Add the landing page for the website
@@ -51,6 +57,9 @@ if __name__ == '__main__':
     config.add_route('main', '/main')
     # Directs the route to the function that can generate the view
     config.add_view(get_main_page, route_name='main')
+
+    config.add_route('get_vals', '/chores/{chore_data}')
+    config.add_view(get_vals, route_name='get_vals', renderer='json')
 
     config.add_static_view(name='/', path='./public', cache_max_age=3600)
     app = config.make_wsgi_app()

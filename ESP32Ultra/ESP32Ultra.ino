@@ -20,7 +20,8 @@
 //const char* password = "they're over there";
 
 //Your Domain name with URL path or IP address with path
-String serverName = "http://192.168.187.207:6543/chores/"; //Andrew Wifi
+//String serverName = "http://192.168.187.207:6543/chores/"; //Andrew Wifi
+String serverName = "http://choretrackerapp.com/main"; //Project Wifi
 //String serverName = "http://192.168.43.148:6543/chores/"; //Merve Wifi
 //String serverName = "http://192.168.1.24:6543/chores/";
 
