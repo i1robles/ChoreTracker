@@ -4,8 +4,12 @@ from pyramid.config import Configurator
 from pyramid.response import Response, FileResponse
 from pyramid.renderers import render_to_response
 
+from dotenv import load_dotenv
+
 import mysql.connector as mysql
 import os
+
+load_dotenv('credentials.env')
 
 db_user = os.environ['MYSQL_USER']
 db_pass = os.environ['MYSQL_PASSWORD']
@@ -186,8 +190,22 @@ def create_child(req):
   return
 
 
-def get_vals(req):
+def get_trash(req):
   data = req.matchdict['chore_data']
+  #Add garbage can height in cm
+  can_height = 57.5
+  # Connect to the database
+  db = mysql.connect(host=db_host, user=db_user, passwd=db_pass, database=db_name)
+  cursor = db.cursor()
+  cursor.execute("use agile_db")
+  # Insert new chore into assigned table
+  query = "UPDATE chore_options SET status = %s WHERE chore_name = 'Take Out Trash';"
+  values = [
+    (str(data/can_height)+"% Full")
+  ]
+  cursor.executemany(query, values)
+  db.commit()
+  db.close()
 
   print(data)
   return True
@@ -250,12 +268,13 @@ if __name__ == '__main__':
     #Note: This is a REST route because we are returning a RESOURCE!
     config.add_view(create_child, route_name='create', renderer='json')
 
-    config.add_route('get_vals', '/chores/{chore_data}')
-    config.add_view(get_vals, route_name='get_vals', renderer='json')
+    config.add_route('get_trash', '/chores_trash/{chore_data}')
+    config.add_view(get_trash, route_name='get_trash', renderer='json')
     
 
     config.add_static_view(name='/', path='./public', cache_max_age=3600)
     app = config.make_wsgi_app()
 
   server = make_server('0.0.0.0', 6000, app)
+  print('Web server started on: http://0.0.0.0:6000')
   server.serve_forever()

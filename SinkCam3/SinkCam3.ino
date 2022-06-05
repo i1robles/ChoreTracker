@@ -14,6 +14,9 @@
 #include "soc/soc.h"
 #include "soc/rtc_cntl_reg.h"
 #include "esp_camera.h"
+#include <HTTPClient.h>
+
+
 
 //const char* ssid = "REPLACE_WITH_YOUR_SSID";
 //const char* password = "REPLACE_WITH_YOUR_PASSWORD";
@@ -92,6 +95,8 @@ void setup() {
   config.pin_pwdn = PWDN_GPIO_NUM;
   config.pin_reset = RESET_GPIO_NUM;
   config.xclk_freq_hz = 20000000;
+  // pixel format
+  //config.pixel_format = PIXFORMAT_RGB565; //
   config.pixel_format = PIXFORMAT_JPEG;
 
   // init with high specs to pre-allocate larger buffers
@@ -139,42 +144,57 @@ String sendPhoto() {
   Serial.println("Connecting to server: " + serverName);
 
   if (client.connect(serverName.c_str(), serverPort)) {
-    Serial.println("Connection successful!");    
-    String head = "--RandomNerdTutorials\r\nContent-Disposition: form-data; name=\"imageFile\"; filename=\"esp32-cam.jpg\"\r\nContent-Type: image/jpeg\r\n\r\n";
-    //String head = "Content-Type: image/jpeg\r\n\r\n";
+    Serial.println("Connection successful!");
+
+
+//      char imstring[960000] = {0};
+//    fb = esp_camera_fb_get();
+//    Serial.print(fb->height); Serial.write(','); // write the height
+//    Serial.print(fb->width); Serial.write('\n'); // write the width
+//    for (int i = 0; i < fb->len; i++){ // dump the pixels' value
+//      //strcat(imstring, fb->buf[i].c_str() ); 
+//      imstring[i]=fb->buf[i];   
+//    
+////    Serial.print(fb->buf[i]);
+////    if (i != fb->len -1) Serial.write(',');
+////    else Serial.println();
+//     }
+
+//   HTTPClient http;   
+//   http.begin("http://192.168.187.207:6543/images/83");  //Specify destination for HTTP request
+//   http.addHeader("Content-Type", "image/jpg");             //Specify content-type header
+//   int httpResponseCode = http.POST(imstring); 
+//   Serial.println("Posting from HTTP Client");
+//   Serial.println(imstring);
+
+
+   
+    String head = "Content-Type: image/jpeg\r\n\r\n";
     String tail = "\r\n--RandomNerdTutorials--\r\n";
-    //String tail = "";
     uint32_t imageLen = fb->len;
-    Serial.println(imageLen);
     uint32_t extraLen = head.length() + tail.length();
     uint32_t totalLen = imageLen + extraLen;
   
     client.println("POST " + serverPath + " HTTP/1.1");
-    client.println("Host: " + serverName);//---
-    client.println("Content-Length: " + String(totalLen));
-    client.println("Content-Type: multipart/form-data; boundary=RandomNerdTutorials");
+    client.println("Host: " + serverName );
+    //client.println("Content-Length: " + String(totalLen) );
+    client.println("Content-Length: " + String(totalLen - tail.length() ) );
     //client.println("Content-Type: multipart/form-data; boundary=RandomNerdTutorials");
-    client.println();
+    //client.println();
     client.print(head);
+   
 
-    Serial.println("POST " + serverPath + " HTTP/1.1");
-    Serial.println("Host: " + serverName);///==
-    Serial.println("Content-Length: " + String(totalLen));
-    Serial.println("Content-Type: multipart/form-data; boundary=RandomNerdTutorials");
-    Serial.println();
-    Serial.print(head);
+
   
     uint8_t *fbBuf = fb->buf;
     size_t fbLen = fb->len;
     for (size_t n=0; n<fbLen; n=n+1024) {
       if (n+1024 < fbLen) {
-        Serial.println("Writing to server 1");
         client.write(fbBuf, 1024);
         fbBuf += 1024;
       }
       else if (fbLen%1024>0) {
         size_t remainder = fbLen%1024;
-        Serial.println("Writing to server 2");
         client.write(fbBuf, remainder);
       }
     }   

@@ -21,7 +21,7 @@
 
 //Your Domain name with URL path or IP address with path
 //String serverName = "http://192.168.187.207:6543/chores/"; //Andrew Wifi
-String serverName = "http://choretrackerapp.com/main"; //Project Wifi
+String serverName = "http://choretrackerapp.com/chores_trash/"; //Project Wifi
 //String serverName = "http://192.168.43.148:6543/chores/"; //Merve Wifi
 //String serverName = "http://192.168.1.24:6543/chores/";
 
@@ -32,7 +32,7 @@ unsigned long lastTime = 0;
 //unsigned long timerDelay = 600000;
 // Set timer to 5 seconds (5000)
 unsigned long timerDelay = 5000;
-
+int dist_array[3] = {0};
 
 // defines pins numbers
 const int trigPin = 12;
@@ -42,6 +42,7 @@ const int switchPin = 15;
 String state = "";
 long duration;
 int distance;
+int array_ind=0;
 
 void setup() {
 
@@ -60,7 +61,6 @@ void setup() {
   Serial.println("");
   Serial.print("Connected to WiFi network with IP Address: ");
   Serial.println(WiFi.localIP());
-
   Serial.println("Timer set to 5 seconds (timerDelay variable), it will take 5 seconds before publishing the first reading.");
 }
 
@@ -76,17 +76,26 @@ void loop() {
   duration = pulseIn(echoPin, HIGH);
   // Calculating the distance
   distance = duration * 0.034 / 2;
+  
+  //Calculate the average distance
+  dist_array[array_ind] = distance;
+  array_ind = array_ind +1;
+  float dist_ave= (dist_array[0]+dist_array[1]+dist_array[2])/3;
+  if(array_ind >2){
+    array_ind=0;
+  }
 
   //read the pushbutton value into a variable
-  int sensorVal = digitalRead(switchPin);
-  if (sensorVal == HIGH) {
-    digitalWrite(ledPin, HIGH);
-    state = "open";
-  }
-  else {
-    digitalWrite(ledPin, LOW);
-    state = "closed";
-  }
+//  int sensorVal = digitalRead(switchPin);
+//  if (sensorVal == HIGH) {
+//    digitalWrite(ledPin, HIGH);
+//    state = "open";
+//  }
+//  else {
+//    digitalWrite(ledPin, LOW);
+//    state = "closed";
+//  }
+
 
 
   //Send an HTTP POST request every 5 second
@@ -95,7 +104,7 @@ void loop() {
     if (WiFi.status() == WL_CONNECTED) {
       HTTPClient http;
 
-      String serverPath = serverName + String(distance) + "-" + state;
+      String serverPath = serverName + String(dist_ave);
 
       // Your Domain name with URL path or IP address with path
       http.begin(serverPath.c_str());
