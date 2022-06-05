@@ -32,6 +32,7 @@ import os
 uid = 0
 
 def get_vals(req):
+  print("Recieved Chore Data/n")
   data = req.matchdict['chore_data']
 
   print(data)
@@ -51,9 +52,11 @@ def write_image(image):
     return uid
 
 def upload_image(request):
-    print("This is a post")
+    print("This is a request")
+    print((request.method))
     if request.method == "POST":
-        print("This is a post")
+        print("This is a post /n Pringting Params: ")
+        print(request.params)
         image = request.params['image']
         uid = write_image(image)
         print("This is UID %d" %uid)
@@ -70,11 +73,14 @@ if __name__ == '__main__':
 
     config.add_route('upload_image', '/images/{image_data}')
     config.add_view(upload_image, route_name='upload_image', renderer='json')
-    config.add_static_view(name='images', path='./images', cache_max_age=3600)
+
+    config.add_static_view(name='/images', path='./public', cache_max_age=3600)
 
     config.add_static_view(name='/', path='./public', cache_max_age=3600)
     app = config.make_wsgi_app()
 
+
+#import pdb; pdb.set_trace()
 
 server = make_server('0.0.0.0', 6543, app)
 print('Web server started on: http://0.0.0.0:6543')
