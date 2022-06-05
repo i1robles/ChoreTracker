@@ -33,11 +33,8 @@ uid = 0
 
 def get_vals(req):
   data = req.matchdict['chore_data']
-  datasp = data.split('-')
-  distance = datasp[0]
-  sheet = datasp[1]
-  print(distance)
-  print(sheet)
+
+  print(data)
   return True
 
 

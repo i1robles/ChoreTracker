@@ -161,6 +161,12 @@ def create_child(req):
   return
 
 
+def get_vals(req):
+  data = req.matchdict['chore_data']
+
+  print(data)
+  return True
+  
 if __name__ == '__main__':
   with Configurator() as config:
     # Add the landing page for the website
@@ -213,6 +219,9 @@ if __name__ == '__main__':
     #Note: This is a REST route because we are returning a RESOURCE!
     config.add_view(create_child, route_name='create', renderer='json')
 
+    config.add_route('get_vals', '/chores/{chore_data}')
+    config.add_view(get_vals, route_name='get_vals', renderer='json')
+    
 
     config.add_static_view(name='/', path='./public', cache_max_age=3600)
     app = config.make_wsgi_app()
