@@ -108,6 +108,151 @@ function showChildView() {
   }
 }
 
+
+
+
+
+/**
+ * Event handler function to populate the child table
+ */
+function select_data() {
+  // Boolean to determine if anything is inserted to the tables
+  let child_empty_bool = true;
+  // This URL path is the data route defined in app.py
+  // send out distance and key to py file
+  let theURL = '/data';
+  if (CONSOLE_BOOL) {
+    console.log("URL to fetch: ", theURL);
+  }
+  // fetch is a Javascript function that sends a request to a server
+  fetch(theURL)
+      .then(response => response.json()) // Convert response to JSON
+      // Run the anonymous function on the received JSON response
+      .then(function(response) {
+        // Updating Child Table
+        let child_table = document.getElementById("child_view_table");
+        for (let elem in response) {
+          let found_child_bool = false;
+          //For each response elem, iterate over my table
+          //If child is in it, add row of chores
+          //If child is not in it, add child header then row of chore
+          for (let i = 0, iterate_row; iterate_row = child_table.rows[i]; i++) {
+            if (response[elem][0] == iterate_row.cells[0].innerHTML) {
+              if (CONSOLE_BOOL) {
+                console.log("Child name found, adding chore");
+              }
+              //Indicate we found the child
+              found_child_bool = true; 
+              //Add chore row directly under that child
+              let row = child_table.insertRow(i+1);
+              //insert chore
+              let cell = row.insertCell(-1);
+              let text = document.createTextNode(response[elem][1]);
+              cell.appendChild(text);
+              //insert due date
+              cell = row.insertCell(-1);
+              text = document.createTextNode(response[elem][3]);
+              cell.appendChild(text);
+              //delete button
+              cell = row.insertCell(-1);
+              cell.classList.add("remove-btn");
+              cell.title = "Delete Chore";
+              cell.addEventListener("click", deleteRow);
+              text = document.createElement("i");
+              text.classList.add("fas", "fa-trash-alt", "fa-x", "clear-btn");
+              cell.appendChild(text);
+              //complete button
+              cell = row.insertCell(-1);
+              cell.classList.add("done-btn");
+              cell.title = "Complete Chore";
+              cell.addEventListener("click", deleteRow);
+              text = document.createElement("i");
+              text.classList.add("fas", "fa-check", "fa-x", "clear-btn");
+              cell.appendChild(text);
+              break;
+            } 
+            
+          }
+          //If never found, add header and row
+          if (!found_child_bool) {
+            if (CONSOLE_BOOL) {
+              console.log("Child name never found, adding child and chore");
+            }
+            //Empty Row for Spacing, except on first
+            if (!child_empty_bool) {
+              let row = child_table.insertRow(-1);
+              row.classList.add("empty_row");
+              let headerCell = document.createElement("th");
+              headerCell.innerHTML = "";
+              row.appendChild(headerCell);
+            }
+            //Header Row
+            let row = child_table.insertRow(-1);
+            //Insert Child Name
+            let headerCell = document.createElement("th");
+            let text = document.createTextNode(response[elem][0]);
+            headerCell.appendChild(text);
+            row.appendChild(headerCell);
+            //Insert Due Date Header
+            headerCell = document.createElement("th");
+            headerCell.innerHTML = "Due Date";
+            row.appendChild(headerCell);
+            //Insert Cancel Button Header
+            headerCell = document.createElement("th");
+            headerCell.innerHTML = "Cancel";
+            row.appendChild(headerCell);
+            //Insert Complete Button Header
+            headerCell = document.createElement("th");
+            headerCell.innerHTML = "Finish";
+            row.appendChild(headerCell);
+
+            //Finished adding header for that child, now add the chore row
+            row = child_table.insertRow(-1);
+            //insert chore
+            let cell = row.insertCell(-1);
+            text = document.createTextNode(response[elem][1]);
+            cell.appendChild(text);
+            //insert due date
+            cell = row.insertCell(-1);
+            text = document.createTextNode(response[elem][3]);
+            cell.appendChild(text);
+            //delete button
+            cell = row.insertCell(-1);
+            cell.classList.add("remove-btn");
+            cell.title = "Delete Chore";
+            cell.addEventListener("click", deleteRow);
+            text = document.createElement("i");
+            text.classList.add("fas", "fa-trash-alt", "fa-x", "clear-btn");
+            cell.appendChild(text);
+            //complete button
+            cell = row.insertCell(-1);
+            cell.classList.add("done-btn");
+            cell.title = "Complete Chore";
+            cell.addEventListener("click", deleteRow);
+            text = document.createElement("i");
+            text.classList.add("fas", "fa-check", "fa-x", "clear-btn");
+            cell.appendChild(text);
+
+            //Indicate the table is no longer empty
+            child_empty_bool = false;
+          }
+
+
+
+
+
+
+
+
+
+        }
+
+
+      });
+}
+
+
+
 /**
  * Event handler function to show MenuList when menu button is pressed
  */
@@ -142,6 +287,50 @@ function showMenuList() {
  function createChild() {
   document.EventBus.fireEvent("createChild");
 }
+
+
+/**
+ * Event handler function to remove a Chore row when the delete button is pressed
+ */
+ function deleteRow() {
+  console.log("deleteRow()")
+  // event.target will be the input element.
+  let cell = event.target.parentNode; 
+  let row = cell.parentNode; // the row to be removed
+
+  // Get the chore name and due date
+  console.log("cell is: ", cell);
+  if (cell.tagName == "TR") {
+    console.log("Clicked the cell");
+
+  }
+  else {
+    console.log("Clicked the button");
+
+  }
+  console.log("row is: ", row);
+  let chore_name = row.cells[0].innerHTML;
+  console.log("Chore name: ", chore_name);
+  let due_date = row.cells[1].innerHTML;
+  console.log("Due date: ", due_date);
+  // Grab child_name_options
+
+  // Iterate through previous rows until we find the child_name
+  let name_found = false;
+  let prevRow = row;
+  while(!name_found) {
+    prevRow = prevRow.previousElementSibling;
+    let prevFirst = prevRow.cells[0].innerHTML;
+    console.log(prevFirst);
+    if (prevFirst == "Julia") {
+      name_found = true;
+    }
+
+  }
+
+  // tr.parentNode.removeChild(tr); // deletes the row
+}
+
 
 /**
  * This event listener is used for initializing anything that isn't associated with any specific webcomponent.
@@ -180,10 +369,15 @@ document.addEventListener("DOMContentLoaded", () => {
     let o_submit_child_btn = document.getElementById("submit-child-input");
     o_submit_child_btn.addEventListener("click", createChild);
 
+    // let o_delete_btns = document.getElementsByClassName("remove-btn");
+    // o_delete_btns.addEventListener("click", deleteRow);
+
     
     if (CONSOLE_BOOL) {
         console.log("main.js - DOM loaded");
     }
+
+    select_data();
 
     // initialize Event Bus instance
     document.EventBus = new EventBus();

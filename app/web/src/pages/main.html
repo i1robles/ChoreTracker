@@ -45,10 +45,10 @@
      
     <div class="pages-bar">
       <div class="pages">
-        <div class='tab_card bordered margin-none clicked-btn' id="cal-view-btn" title="Calendar View"> 
+        <div class='tab_card bordered margin-none' id="cal-view-btn" title="Calendar View"> 
           Calendar
         </div>
-        <div class='tab_card bordered margin-none' id="child-view-btn" title="Child View"> 
+        <div class='tab_card bordered margin-none clicked-btn' id="child-view-btn" title="Child View"> 
           Children
         </div>
         <div class='tab_card bordered margin-none' id="sensor-view-btn" title="Sensor View"> 
@@ -78,129 +78,11 @@
     <child-box></child-box>
 
     <section class='padding-responsive full_height'> 
+      <table id ="cal_view_table" class="chores_table hidden"></table>
 
-      <table class='margin-top-xl'>
-        <thead>
-          <tr>
-            <th class='small'> Child Name </th>
-            <th class='medium'> Points </th>
-            <th class='large'> Email </th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for user in names %}
-          <tr>
-            <td> {{user[0]}} </td>
-            <td> {{user[1]}} </td>
-            <td> No Email </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+      <table id ="child_view_table" class="chores_table"></table>
 
-
-
-
-      <table id ="cal_view_table" class="chores_table">
-        <tr>
-          <th>Monday</th>
-          <th>Assigned</th>
-          <th>Done?</th>
-        </tr>
-        <tr>
-          <td>Clean Dishes</td>
-          <td>Andrew</td>
-          <td>&times;</td>
-        </tr>
-        <tr>
-          <td>Take Out Trash</td>
-          <td>Merve</td>
-          <td>&#10003;</td>
-        </tr>
-        <!--Empty space at end of every section-->
-        <tr><td class="empty_row"></td></tr>
-        <tr>
-          <th>Wednesday</th>
-          <th>Assigned</th>
-          <th>Done?</th>
-        </tr>
-        <tr>
-          <td>Take Out Trash</td>
-          <td>Julia</td>
-          <td>&times;</td>
-        </tr>
-        <!--Empty space at end of every section-->
-        <tr><td class="empty_row"></td></tr>
-      </table>
-
-      <table id ="child_view_table" class="chores_table hidden">
-        <tr>
-          <th>Andrew</th>
-          <th>Finish By</th>
-          <th>Done?</th>
-        </tr>
-        <tr>
-          <td>Clean Dishes</td>
-          <td>Monday</td>
-          <td>&times;</td>
-        </tr>
-        <!--Empty space at end of every section-->
-        <tr><td class="empty_row"></td></tr>
-        <tr>
-          <th>Julia</th>
-          <th>Finish By</th>
-          <th>Done?</th>
-        </tr>
-        <tr>
-          <td>Take Out Trash</td>
-          <td>Wednesday</td>
-          <td>&times;</td>
-        </tr>
-        <!--Empty space at end of every section-->
-        <tr><td class="empty_row"></td></tr>
-        <tr>
-          <th>Merve</th>
-          <th>Finish By</th>
-          <th>Done?</th>
-        </tr>
-        <tr>
-          <td>Take Out Trash</td>
-          <td>Monday</td>
-          <td>&#10003;</td>
-        </tr>
-        <!--Empty space at end of every section-->
-        <tr><td class="empty_row"></td></tr>
-      </table>
-
-      <table id ="sensor_view_table" class="chores_table hidden">
-        <tr>
-          <th>Sensor Chores</th>
-          <th>Next Assigned</th>
-          <th>Status</th>
-        </tr>
-        <tr>
-          <td>Sink Dishes</td>
-          <td>Merve</td>
-          <td>75%</td>
-        </tr>
-        <tr>
-          <td>Andrew's Bed</td>
-          <td>Andrew</td>
-          <td>Done</td>
-        </tr>
-        <tr>
-          <td>Kitchen Trash</td>
-          <td>Julia</td>
-          <td>60%</td>
-        </tr>
-        <tr>
-          <td>Andrew's Laundry</td>
-          <td>Andrew</td>
-          <td>25%</td>
-        </tr>
-        <!--Empty space at end of every section-->
-        <tr><td class="empty_row"></td></tr>
-      </table>
+      <table id ="sensor_view_table" class="chores_table hidden"></table>
     </section>
 
 

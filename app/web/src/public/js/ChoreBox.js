@@ -1,9 +1,11 @@
 
+const CONSOLE_BOOL = true;
+
 /**
  * Custom HTML element encapsulating all of the functionality related to the Intructions Box
  * @extends HTMLElement
  */
- class ChoreBox extends HTMLElement {
+class ChoreBox extends HTMLElement {
 
     /**
      * Constructs a new Instructions Box, initializing all elements
@@ -52,14 +54,7 @@
         o_child_input.classList.add("custom-input");
         o_child_input.id = "child-input";
 
-        let o_child_options = ["Andrew", "Julia", "Merve", "Ivan"];
-        for (const child of o_child_options) {
-            let o_current_option = document.createElement("option");
-            o_current_option.classList.add("custom-input-option");
-            o_current_option.value = child;
-            o_current_option.text = child.charAt(0).toUpperCase() + child.slice(1);
-            o_child_input.appendChild(o_current_option);
-        }
+        
         o_child_input_wrapper.append(o_child_label, o_child_input);
 
         //Select chore
@@ -73,17 +68,6 @@
         let o_chore_input = document.createElement("select");
         o_chore_input.classList.add("custom-input");
         o_chore_input.id = "chore-input";
-
-        let o_chore_options = ["Clean the Dishes", "Do Laundry", "Take out Trash",
-         "Make the Bed", "Do your homework"];
-        for (const chore of o_chore_options) {
-            let o_current_option = document.createElement("option");
-            o_current_option.classList.add("custom-input-option");
-            o_current_option.value = chore;
-            o_current_option.text = chore.charAt(0).toUpperCase() + chore.slice(1);
-            o_chore_input.appendChild(o_current_option);
-        }
-        o_chore_input_wrapper.append(o_chore_label, o_chore_input);
 
         //Select when it should be completed by
         let o_date_input_wrapper = document.createElement("div");
@@ -107,13 +91,51 @@
         let o_submit_input_wrapper = document.createElement("div");
         o_submit_input_wrapper.classList.add("custom-input-wrapper");
 
-        let o_submit_input = document.createElement("input");
-        o_submit_input.setAttribute("type", "submit");
+        let o_submit_input = document.createElement("div");
         o_submit_input.classList.add("custom-btn");
         o_submit_input.id = "submit-chore-input";
+        o_submit_input.innerHTML = "Assign";
         o_submit_input.title = "Assign Chore";
 
         o_submit_input_wrapper.append(o_submit_input);
+
+        let childURL = '/child';
+        if (CONSOLE_BOOL) {
+            console.log("childURL to fetch: ", childURL);
+        }
+        // fetch is a Javascript function that sends a request to a server
+        fetch(childURL)
+            .then(response => response.json()) // Convert response to JSON
+            // Run the anonymous function on the received JSON response
+            .then(function(response) {
+                for (let elem in response) {
+                    let o_current_option = document.createElement("option");
+                    o_current_option.classList.add("custom-input-option");
+                    o_current_option.value = response[elem][0];
+                    o_current_option.text = response[elem][0];
+                    o_child_input.appendChild(o_current_option);
+                }
+                o_child_input_wrapper.append(o_child_label, o_child_input);
+            });
+
+        let choreURL = '/chore';
+        if (CONSOLE_BOOL) {
+            console.log("choreURL to fetch: ", choreURL);
+        }
+        // fetch is a Javascript function that sends a request to a server
+        fetch(choreURL)
+            .then(response => response.json()) // Convert response to JSON
+            // Run the anonymous function on the received JSON response
+            .then(function(response) {
+                for (let elem in response) {
+                    let o_current_option = document.createElement("option");
+                    o_current_option.classList.add("custom-input-option");
+                    o_current_option.value = response[elem][0];
+                    o_current_option.text = response[elem][0];
+                    o_chore_input.appendChild(o_current_option);
+                }
+                o_chore_input_wrapper.append(o_chore_label, o_chore_input);
+            });
 
 
         o_form_wrapper.append(o_chore_input_wrapper, o_child_input_wrapper, o_date_input_wrapper, o_submit_input_wrapper);
@@ -162,12 +184,27 @@
      */
      createChore() {
         console.log("Creating Chore");
+        let child_name = this.querySelector("#child-input").value;
+        let chore_name = this.querySelector("#chore-input").value;
+        let due_date = this.querySelector("#date-input").value;
+
+        console.log("here");
+        let theURL = '/assign/' + child_name + "." + chore_name + "." + due_date;
+        if (CONSOLE_BOOL) {
+            console.log("URL to fetch: ", theURL);
+        }
+        // fetch is a Javascript function that sends a request to a server
+        fetch(theURL)
+            .then(response => response.json()) // Convert response to JSON
+            // Run the anonymous function on the received JSON response
+            .then(function(response) {
+                console.log("reload now")
+                window.location.href=window.location.href
+            });
     }
+
+
+
 }
-
-
-
 customElements.define("chore-box", ChoreBox);
-
-
 export { ChoreBox }

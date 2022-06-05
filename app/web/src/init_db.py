@@ -33,7 +33,7 @@ try:
     CREATE TABLE username_users (
       child_name     VARCHAR(30) NOT NULL,
       child_points   INTEGER  NOT NULL,
-      birth_date     DATE,
+      birth_date     VARCHAR(12),
       pin            CHAR(4) 
     );
   """)
@@ -59,7 +59,7 @@ try:
       child_name     VARCHAR(30) NOT NULL,
       chore_name     VARCHAR(30) NOT NULL,
       chore_points   INTEGER  NOT NULL,
-      due_date       DATE NOT NULL
+      due_date       VARCHAR(12) NOT NULL
     );
   """)
 except:
@@ -72,8 +72,8 @@ try:
       child_name     VARCHAR(30) NOT NULL,
       chore_name     VARCHAR(30) NOT NULL,
       chore_points   INTEGER  NOT NULL,
-      due_date       DATE NOT NULL,
-      complete_date  DATE NOT NULL
+      due_date       VARCHAR(12) NOT NULL,
+      complete_date  VARCHAR(12) NOT NULL
     );
   """)
 except:
@@ -85,7 +85,7 @@ try:
     CREATE TABLE username_redeemed (
       child_name     VARCHAR(30) NOT NULL,
       redeem_points   INTEGER  NOT NULL,
-      redeem_date  DATE NOT NULL
+      redeem_date  VARCHAR(12) NOT NULL
     );
   """)
 except:
@@ -94,10 +94,10 @@ except:
 # Insert Records of a family
 query = "insert into username_users (child_name, child_points, birth_date, pin) values (%s, %s, %s, %s)"
 values = [
-  ('Parent', '0', '1998-12-06 12:00:00', '1234'),
-  ('Julia', '0', '1998-12-06 12:00:00', 'NULL'),
-  ('Merve', '0', '1998-12-06 12:00:00', 'NULL'),
-  ('Andrew', '0', '1998-12-06 12:00:00', 'NULL')
+  ('Parent', '0', '1998-12-06', '1234'),
+  ('Julia', '0', '1998-12-06', 'NULL'),
+  ('Merve', '0', '1998-12-06', 'NULL'),
+  ('Andrew', '0', '1998-12-06', 'NULL')
 ]
 cursor.executemany(query, values)
 db.commit()
@@ -120,13 +120,13 @@ db.commit()
 # Insert Records of chore assigned now
 query = "insert into username_assigned (child_name, chore_name, chore_points, due_date) values (%s, %s, %s, %s)"
 values = [
-  ('Parent', 'Mow The Lawn', '50', '2022-07-03 12:00:00'),
-  ('Julia', 'Take Out Trash', '10', '2022-07-03 12:00:00'),
-  ('Julia', 'Do Your Homework', '10', '2022-07-04 12:00:00'),
-  ('Merve', 'Clean Your Room', '10', '2022-07-05 12:00:00'),
-  ('Merve', 'Do The Dishes', '20', '2022-07-04 12:00:00'),
-  ('Andrew', 'Take Out Trash', '10', '2022-07-05 12:00:00'),
-  ('Andrew', 'Do Your Laundry', '20', '2022-07-07 12:00:00')
+  ('Parent', 'Mow The Lawn', '50', '2022-07-03'),
+  ('Julia', 'Take Out Trash', '10', '2022-07-03'),
+  ('Julia', 'Do Your Homework', '10', '2022-07-04'),
+  ('Merve', 'Clean Your Room', '10', '2022-07-05'),
+  ('Merve', 'Do The Dishes', '20', '2022-07-04'),
+  ('Andrew', 'Take Out Trash', '10', '2022-07-05'),
+  ('Andrew', 'Do Your Laundry', '20', '2022-07-07')
 ]
 cursor.executemany(query, values)
 db.commit()

@@ -1,4 +1,6 @@
 
+const CONSOLE_BOOL = true;
+
 /**
  * Custom HTML element encapsulating all of the functionality related to the Intructions Box
  * @extends HTMLElement
@@ -81,10 +83,10 @@
         let o_submit_input_wrapper = document.createElement("div");
         o_submit_input_wrapper.classList.add("custom-input-wrapper");
 
-        let o_submit_input = document.createElement("input");
-        o_submit_input.setAttribute("type", "submit");
+        let o_submit_input = document.createElement("div");
         o_submit_input.classList.add("custom-btn");
         o_submit_input.id = "submit-child-input";
+        o_submit_input.innerHTML = "Create";
         o_submit_input.title = "Create Child";
 
         o_submit_input_wrapper.append(o_submit_input);
@@ -135,6 +137,23 @@
      */
      createChild() {
         console.log("Creating Child");
+        console.log(this.querySelector("#add-child-input").value);
+        console.log(this.querySelector("#birthdate-input").value);
+        let child_name = this.querySelector("#add-child-input").value;
+        let birth_date = this.querySelector("#birthdate-input").value;
+
+        let theURL = '/create/' + child_name + "." + birth_date;
+        if (CONSOLE_BOOL) {
+            console.log("URL to fetch: ", theURL);
+        }
+        // fetch is a Javascript function that sends a request to a server
+        fetch(theURL)
+            .then(response => response.json()) // Convert response to JSON
+            // Run the anonymous function on the received JSON response
+            .then(function(response) {
+                console.log("reload now")
+                window.location.href=window.location.href
+            });
     }
 }
 
