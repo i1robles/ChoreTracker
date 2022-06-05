@@ -293,40 +293,54 @@ function showMenuList() {
  * Event handler function to remove a Chore row when the delete button is pressed
  */
  function deleteRow() {
-  console.log("deleteRow()")
   // event.target will be the input element.
-  let cell = event.target.parentNode; 
-  let row = cell.parentNode; // the row to be removed
-
+  let row = event.target.parentNode;
+  // If the icon was clicked, row is the td, we want the tr
+  if (row.tagName == "TD") {
+    row = row.parentNode;
+  }
   // Get the chore name and due date
-  console.log("cell is: ", cell);
-  if (cell.tagName == "TR") {
-    console.log("Clicked the cell");
-
-  }
-  else {
-    console.log("Clicked the button");
-
-  }
-  console.log("row is: ", row);
   let chore_name = row.cells[0].innerHTML;
-  console.log("Chore name: ", chore_name);
   let due_date = row.cells[1].innerHTML;
-  console.log("Due date: ", due_date);
-  // Grab child_name_options
+  let child_name = "";
 
-  // Iterate through previous rows until we find the child_name
+  // These variables will be used to iterate backwards from the current row
+  // until a child_name is found
   let name_found = false;
   let prevRow = row;
-  while(!name_found) {
-    prevRow = prevRow.previousElementSibling;
-    let prevFirst = prevRow.cells[0].innerHTML;
-    console.log(prevFirst);
-    if (prevFirst == "Julia") {
-      name_found = true;
-    }
 
-  }
+  // We need to grab the child names from the table users to look for the name
+  let childURL = '/child';
+  // fetch is a Javascript function that sends a request to a server
+    fetch(childURL)
+        .then(response => response.json()) // Convert response to JSON
+        // Run the anonymous function on the received JSON response
+        .then(function(response) {
+          // Now response holds the child_names saved
+            //This loop will keep checking the previous rows until a child name is found          
+            while(!name_found) {
+              prevRow = prevRow.previousElementSibling;
+              let prevFirstCell = prevRow.cells[0].innerHTML;
+              // Check if the current cell matches any of the names
+              for (let elem in response) {
+                if (prevFirstCell == response[elem][0]) {
+                  name_found = true;
+                  // Save the first name we find and exit loop
+                  child_name = prevFirstCell;
+                }
+              }
+            }
+            let deleteURL = '/unassign/' + child_name + "." + chore_name + "." + due_date;
+            // fetch is a Javascript function that sends a request to a server
+            fetch(deleteURL)
+                .then(response => response.json()) // Convert response to JSON
+                // Run the anonymous function on the received JSON response
+                .then(function(response) {
+                    window.location.href=window.location.href
+                });
+
+            
+        });
 
   // tr.parentNode.removeChild(tr); // deletes the row
 }

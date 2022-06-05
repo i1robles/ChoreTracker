@@ -134,6 +134,31 @@ def assign_chore(req):
   db.close()
   return
 
+# Remove a chore from the assigned table
+def unassign_chore(req):
+  # Retrieve the route argument
+  the_id = req.matchdict['unassign_id']
+
+  # Parse the_id to get the different parts
+  split_array = the_id.split(".")
+  child_name = split_array[0]
+  chore_name = split_array[1]
+  due_date = split_array[2]
+
+  # Connect to the database
+  db = mysql.connect(host=db_host, user=db_user, passwd=db_pass, database=db_name)
+  cursor = db.cursor()
+  cursor.execute("use agile_db")
+  # Insert new chore into assigned table
+  query = "delete from username_assigned where child_name = %s and chore_name = %s and due_date = %s"
+  values = [
+    (child_name, chore_name, due_date)
+  ]
+  cursor.executemany(query, values)
+  db.commit()
+  db.close()
+  return
+
 
 # Add a child into the users table
 def create_child(req):
@@ -212,6 +237,12 @@ if __name__ == '__main__':
     #Binds the function get_data to the data route and returns JSON
     #Note: This is a REST route because we are returning a RESOURCE!
     config.add_view(assign_chore, route_name='assign', renderer='json')
+
+    # Adding route to display data 
+    config.add_route('unassign', '/unassign/{unassign_id}')
+    #Binds the function get_data to the data route and returns JSON
+    #Note: This is a REST route because we are returning a RESOURCE!
+    config.add_view(unassign_chore, route_name='unassign', renderer='json')
 
     # Adding route to display data 
     config.add_route('create', '/create/{child_id}')
