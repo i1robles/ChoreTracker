@@ -3,7 +3,7 @@ import { ChoreBox } from "./ChoreBox.js";
 import { ChildBox } from "./ChildBox.js";
 import { EventBus } from "./eventBus.js";
 
-const CONSOLE_BOOL = false;
+const CONSOLE_BOOL = true;
 
 /**
  * Event handler function to change the table displayed to calendar view

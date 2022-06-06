@@ -1,5 +1,5 @@
 
-const CONSOLE_BOOL = false;
+const CONSOLE_BOOL = true;
 
 /**
  * Custom HTML element encapsulating all of the functionality related to the Intructions Box
