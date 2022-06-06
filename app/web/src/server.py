@@ -270,7 +270,7 @@ def get_trash(req):
 def get_bed(req):
   data = req.matchdict['chore_data']
   final = "Not Done"
-  if (data == "open"):
+  if (data == "closed"):
     final = "Done"
   #Add garbage can height in cm
   # Connect to the database
