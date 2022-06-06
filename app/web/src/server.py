@@ -194,20 +194,52 @@ def get_trash(req):
   data = req.matchdict['chore_data']
   #Add garbage can height in cm
   can_height = 57.5
+  final = str(int(round(float(data)/can_height, 2)*100)) + "%" + " Full"
+  print(final)
   # Connect to the database
   db = mysql.connect(host=db_host, user=db_user, passwd=db_pass, database=db_name)
   cursor = db.cursor()
   cursor.execute("use agile_db")
   # Insert new chore into assigned table
-  query = "UPDATE chore_options SET status = %s WHERE chore_name = 'Take Out Trash';"
+  query = "UPDATE username_chore_options SET status = %s WHERE chore_name = 'Take Out Trash';"
   values = [
-    (str(data/can_height)+"% Full")
+    (final,)
   ]
   cursor.executemany(query, values)
   db.commit()
+
+  
+  cursor.execute("select * from username_chore_options")
+  record = cursor.fetchall()
   db.close()
 
-  print(data)
+  print(record)
+  return True
+
+def get_bed(req):
+  data = req.matchdict['chore_data']
+  final = "Not Done"
+  if (data == "open"):
+    final = "Done"
+  #Add garbage can height in cm
+  # Connect to the database
+  db = mysql.connect(host=db_host, user=db_user, passwd=db_pass, database=db_name)
+  cursor = db.cursor()
+  cursor.execute("use agile_db")
+  # Insert new chore into assigned table
+  query = "UPDATE username_chore_options SET status = %s WHERE chore_name = 'Make Your Bed';"
+  values = [
+    (final,)
+  ]
+  cursor.executemany(query, values)
+  db.commit()
+
+  
+  cursor.execute("select * from username_chore_options")
+  record = cursor.fetchall()
+  db.close()
+
+  print(record)
   return True
   
 if __name__ == '__main__':
@@ -270,6 +302,9 @@ if __name__ == '__main__':
 
     config.add_route('get_trash', '/chores_trash/{chore_data}')
     config.add_view(get_trash, route_name='get_trash', renderer='json')
+    
+    config.add_route('get_bed', '/chores_bed/{chore_data}')
+    config.add_view(get_bed, route_name='get_bed', renderer='json')
     
 
     config.add_static_view(name='/', path='./public', cache_max_age=3600)

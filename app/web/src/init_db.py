@@ -46,7 +46,7 @@ try:
     CREATE TABLE username_chore_options (
       chore_name     VARCHAR(30) NOT NULL,
       chore_points   INTEGER  NOT NULL,
-      status         VARCHAR(4) 
+      status         VARCHAR(12) 
     );
   """)
 except:
@@ -107,6 +107,7 @@ query = "insert into username_chore_options (chore_name, chore_points, status) v
 values = [
   ('Take Out Trash', '10', 'NULL'),
   ('Do Your Homework', '10', 'NULL'),
+  ('Make Your Bed', '10', 'NULL'),
   ('Clean Your Room', '10', 'NULL'),
   ('Do The Dishes', '20', 'NULL'),
   ('Do Your Laundry', '20', 'NULL'),
