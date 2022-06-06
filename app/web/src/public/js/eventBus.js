@@ -1,4 +1,4 @@
-const CONSOLE_BOOL = true;
+const CONSOLE_BOOL = false;
 
 /**
  * Class representing an Event Hub to centralize all event logic

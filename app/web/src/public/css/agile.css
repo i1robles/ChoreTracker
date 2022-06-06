@@ -573,8 +573,7 @@ label {
   z-index: 2;
   top: 0;
   right: 0;
-  /*box-shadow: -5px 5px 10px rgb(255, 255, 255);*/
-  box-shadow: -0.1rem 0px 10px var(--white-less-transparent);
+  border-radius: var(--border-radius);
   transition: 0.3s;
   border: 1px;
 }
@@ -749,7 +748,7 @@ label {
 }
 
 .sidenav {
-  background-color: var(--dark-less-transparent);
+  background-color: var(--page-color-light);
   color: white;
 }
 
@@ -797,6 +796,10 @@ label {
   justify-content: center;
   width: 10%;
   padding: var(--padding-lg);
+}
+
+#sensor_view_table td:last-child {
+  width: 25%;
 }
 
 .empty_row {

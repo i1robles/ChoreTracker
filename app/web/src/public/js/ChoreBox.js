@@ -1,5 +1,5 @@
 
-const CONSOLE_BOOL = true;
+const CONSOLE_BOOL = false;
 
 /**
  * Custom HTML element encapsulating all of the functionality related to the Intructions Box
@@ -183,12 +183,12 @@ class ChoreBox extends HTMLElement {
      * Function to create chore and add it to database
      */
      createChore() {
-        console.log("Creating Chore");
+        if (CONSOLE_BOOL) {
+            console.log("Creating Chore");
+        }
         let child_name = this.querySelector("#child-input").value;
         let chore_name = this.querySelector("#chore-input").value;
         let due_date = this.querySelector("#date-input").value;
-
-        console.log("here");
         let theURL = '/assign/' + child_name + "." + chore_name + "." + due_date;
         if (CONSOLE_BOOL) {
             console.log("URL to fetch: ", theURL);
@@ -198,7 +198,6 @@ class ChoreBox extends HTMLElement {
             .then(response => response.json()) // Convert response to JSON
             // Run the anonymous function on the received JSON response
             .then(function(response) {
-                console.log("reload now")
                 window.location.href=window.location.href
             });
     }

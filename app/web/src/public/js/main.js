@@ -3,7 +3,7 @@ import { ChoreBox } from "./ChoreBox.js";
 import { ChildBox } from "./ChildBox.js";
 import { EventBus } from "./eventBus.js";
 
-const CONSOLE_BOOL = true;
+const CONSOLE_BOOL = false;
 
 /**
  * Event handler function to change the table displayed to calendar view
@@ -113,14 +113,140 @@ function showChildView() {
 
 
 /**
+ * Event handler function to populate the chore table
+ */
+ function select_data_chore() {
+  // Boolean to determine if anything is inserted to the tables
+  let chore_empty_bool = true;
+  // This URL path is the data route defined in app.py
+  // send out distance and key to py file
+  let theURL = '/data_chore';
+  if (CONSOLE_BOOL) {
+    console.log("URL to fetch: ", theURL);
+  }
+  // fetch is a Javascript function that sends a request to a server
+  fetch(theURL)
+      .then(response => response.json()) // Convert response to JSON
+      // Run the anonymous function on the received JSON response
+      .then(function(response) {
+        // Updating Chore Table
+        let chore_table = document.getElementById("cal_view_table");
+        for (let elem in response) {
+          let found_chore_bool = false;
+          //For each response elem, iterate over my table
+          //If date is in it, add row of chores
+          //If date is not in it, add date header then row of chore
+          for (let i = 0, iterate_row; iterate_row = chore_table.rows[i]; i++) {
+            if (response[elem][3] == iterate_row.cells[0].innerHTML) {
+              if (CONSOLE_BOOL) {
+                console.log("Date found, adding chore");
+              }
+              //Indicate we found the child
+              found_chore_bool = true; 
+              //Add chore row directly under that child
+              let row = chore_table.insertRow(i+1);
+              //insert chore
+              let cell = row.insertCell(-1);
+              let text = document.createTextNode(response[elem][1]);
+              cell.appendChild(text);
+              //insert child name
+              cell = row.insertCell(-1);
+              text = document.createTextNode(response[elem][0]);
+              cell.appendChild(text);
+              //delete button
+              cell = row.insertCell(-1);
+              cell.classList.add("remove-btn");
+              cell.title = "Delete Chore";
+              cell.addEventListener("click", deleteRow);
+              text = document.createElement("i");
+              text.classList.add("fas", "fa-trash-alt", "fa-x", "clear-btn");
+              cell.appendChild(text);
+              //complete button
+              cell = row.insertCell(-1);
+              cell.classList.add("done-btn");
+              cell.title = "Complete Chore";
+              cell.addEventListener("click", deleteRow);
+              text = document.createElement("i");
+              text.classList.add("fas", "fa-check", "fa-x", "clear-btn");
+              cell.appendChild(text);
+              break;
+            } 
+            
+          }
+          //If never found, add header first then row
+          if (!found_chore_bool) {
+            if (CONSOLE_BOOL) {
+              console.log("Date never found, adding child and chore");
+            }
+            //Empty Row for Spacing, except on first
+            if (!chore_empty_bool) {
+              let row = chore_table.insertRow(-1);
+              row.classList.add("empty_row");
+              let headerCell = document.createElement("th");
+              headerCell.innerHTML = "";
+              row.appendChild(headerCell);
+            }
+            //Header Row
+            let row = chore_table.insertRow(-1);
+            //Insert Date
+            let headerCell = document.createElement("th");
+            let text = document.createTextNode(response[elem][3]);
+            headerCell.appendChild(text);
+            row.appendChild(headerCell);
+            //Insert Due Date Header
+            headerCell = document.createElement("th");
+            headerCell.innerHTML = "Assigned";
+            row.appendChild(headerCell);
+            //Insert Cancel Button Header
+            headerCell = document.createElement("th");
+            headerCell.innerHTML = "Cancel";
+            row.appendChild(headerCell);
+            //Insert Complete Button Header
+            headerCell = document.createElement("th");
+            headerCell.innerHTML = "Finish";
+            row.appendChild(headerCell);
+            //Finished adding header for that child, now add the chore row
+            row = chore_table.insertRow(-1);
+            //insert chore
+            let cell = row.insertCell(-1);
+            text = document.createTextNode(response[elem][1]);
+            cell.appendChild(text);
+            //insert due date
+            cell = row.insertCell(-1);
+            text = document.createTextNode(response[elem][0]);
+            cell.appendChild(text);
+            //delete button
+            cell = row.insertCell(-1);
+            cell.classList.add("remove-btn");
+            cell.title = "Delete Chore";
+            cell.addEventListener("click", deleteRow);
+            text = document.createElement("i");
+            text.classList.add("fas", "fa-trash-alt", "fa-x", "clear-btn");
+            cell.appendChild(text);
+            //complete button
+            cell = row.insertCell(-1);
+            cell.classList.add("done-btn");
+            cell.title = "Complete Chore";
+            cell.addEventListener("click", deleteRow);
+            text = document.createElement("i");
+            text.classList.add("fas", "fa-check", "fa-x", "clear-btn");
+            cell.appendChild(text);
+            //Indicate the table is no longer empty
+            chore_empty_bool = false;
+          }
+        }
+      });
+}
+
+/**
  * Event handler function to populate the child table
  */
-function select_data() {
+function select_data_child() {
   // Boolean to determine if anything is inserted to the tables
   let child_empty_bool = true;
   // This URL path is the data route defined in app.py
   // send out distance and key to py file
-  let theURL = '/data';
+  let theURL = '/data_child';
   if (CONSOLE_BOOL) {
     console.log("URL to fetch: ", theURL);
   }
@@ -205,7 +331,6 @@ function select_data() {
             headerCell = document.createElement("th");
             headerCell.innerHTML = "Finish";
             row.appendChild(headerCell);
-
             //Finished adding header for that child, now add the chore row
             row = child_table.insertRow(-1);
             //insert chore
@@ -232,22 +357,61 @@ function select_data() {
             text = document.createElement("i");
             text.classList.add("fas", "fa-check", "fa-x", "clear-btn");
             cell.appendChild(text);
-
             //Indicate the table is no longer empty
             child_empty_bool = false;
           }
-
-
-
-
-
-
-
-
-
         }
+      });
+}
 
 
+/**
+ * Event handler function to populate the sensor table
+ */
+function select_sensors() {
+  // Boolean to determine if anything is inserted to the tables
+  let sensor_empty_bool = true;
+  // This URL path is the data route defined in app.py
+  // send out distance and key to py file
+  let theURL = '/status';
+  if (CONSOLE_BOOL) {
+    console.log("URL to fetch: ", theURL);
+  }
+  // fetch is a Javascript function that sends a request to a server
+  fetch(theURL)
+      .then(response => response.json()) // Convert response to JSON
+      // Run the anonymous function on the received JSON response
+      .then(function(response) {
+        // Updating sensor Table
+        let sensor_table = document.getElementById("sensor_view_table");
+        //Header Row
+        let row = sensor_table.insertRow(-1);
+        let headerCell = document.createElement("th");
+        headerCell.innerHTML = "Sensors";
+        row.appendChild(headerCell);
+        headerCell = document.createElement("th");
+        headerCell.innerHTML = "Current Status";
+        row.appendChild(headerCell);
+        // Finished adding header, now add the chores
+        for (let elem in response) {
+          // For each response[elem][1] holds the status value
+          if (response[elem][1] != "NULL") {
+            // Only add the chores with a status other than NULL
+            if (CONSOLE_BOOL) {
+              console.log("Chore status not null, adding chore");
+            }
+            //Add chore row 
+            let row = sensor_table.insertRow(-1);
+            // Insert chore
+            let cell = row.insertCell(-1);
+            let text = document.createTextNode(response[elem][0]);
+            cell.appendChild(text);
+            // Insert current status
+            cell = row.insertCell(-1);
+            text = document.createTextNode(response[elem][1]);
+            cell.appendChild(text);
+          } 
+        }
       });
 }
 
@@ -391,7 +555,9 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("main.js - DOM loaded");
     }
 
-    select_data();
+    select_data_chore();
+    select_data_child();
+    select_sensors();
 
     // initialize Event Bus instance
     document.EventBus = new EventBus();

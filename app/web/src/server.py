@@ -28,18 +28,44 @@ def get_signup_page(req):
 def get_main_page(req):
   return FileResponse("pages/main.html")
 
-# get the data in the assigned table
-def get_data(req):
+# get the data in the assigned table for CHILD view
+def get_data_child(req):
   #connect to the database
   db = mysql.connect(host=db_host, user=db_user, passwd=db_pass, database=db_name)
   cursor = db.cursor()
   cursor.execute("USE agile_db")
   # cursor.execute("INSERT INTO table VALUES (%s, %s, %s)", (var1, var2, var3))
-  cursor.execute("select * from username_assigned;")
+  cursor.execute("select * from username_assigned order by child_name asc, due_date desc;")
 
 # display all records we get 
   record = cursor.fetchall()
-  print("All Data received:")
+  print("Child data received:")
+  print(record)
+  db.close()
+ 
+  # if no record found, return error json
+  if record is None:
+    return {
+      'error' : "No data was found for the given ID" ,
+      'id': "",
+      'GPIO' : "",
+      'Keyboard': ""
+    }
+
+  return record
+
+# get the data in the assigned table for CALENDAR view
+def get_data_chore(req):
+  #connect to the database
+  db = mysql.connect(host=db_host, user=db_user, passwd=db_pass, database=db_name)
+  cursor = db.cursor()
+  cursor.execute("USE agile_db")
+  # cursor.execute("INSERT INTO table VALUES (%s, %s, %s)", (var1, var2, var3))
+  cursor.execute("select * from username_assigned order by due_date asc, child_name desc;")
+
+# display all records we get 
+  record = cursor.fetchall()
+  print("Calendar data received:")
   print(record)
   db.close()
  
@@ -90,6 +116,31 @@ def get_chore_names(req):
 # display all records we get 
   record = cursor.fetchall()
   print("Chore Names received:")
+  print(record)
+  db.close()
+ 
+  # if no record found, return error json
+  if record is None:
+    return {
+      'error' : "No data was found for the given ID" ,
+      'id': "",
+      'GPIO' : "",
+      'Keyboard': ""
+    }
+
+  return record
+
+# get the chores and status in the chore_options table
+def get_chore_status(req):
+  #connect to the database
+  db = mysql.connect(host=db_host, user=db_user, passwd=db_pass, database=db_name)
+  cursor = db.cursor()
+  cursor.execute("USE agile_db")
+  cursor.execute("select chore_name, status from username_chore_options;")
+
+# display all records we get 
+  record = cursor.fetchall()
+  print("Chore Names and Statuses received:")
   print(record)
   db.close()
  
@@ -265,10 +316,21 @@ if __name__ == '__main__':
     config.add_view(get_main_page, route_name='main')
 
     # Adding route to display data 
-    config.add_route('data', '/data')
-    #Binds the function get_data to the data route and returns JSON
+    config.add_route('data_child', '/data_child')
+    #Binds the function get_data_child to the data route and returns JSON
     #Note: This is a REST route because we are returning a RESOURCE!
-    config.add_view(get_data, route_name='data', renderer='json')
+    config.add_view(get_data_child, route_name='data_child', renderer='json')
+
+    # Adding route to display data 
+    config.add_route('data_chore', '/data_chore')
+    #Binds the function get_data_chore to the data_chore route and returns JSON
+    config.add_view(get_data_chore, route_name='data_chore', renderer='json')
+
+    # Adding route to display data 
+    config.add_route('status', '/status')
+    #Binds the function get_chore_status to the status route and returns JSON
+    #Note: This is a REST route because we are returning a RESOURCE!
+    config.add_view(get_chore_status, route_name='status', renderer='json')
 
     # Adding route to display data 
     config.add_route('child', '/child')

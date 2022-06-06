@@ -1,5 +1,5 @@
 
-const CONSOLE_BOOL = true;
+const CONSOLE_BOOL = false;
 
 /**
  * Custom HTML element encapsulating all of the functionality related to the Intructions Box
@@ -136,9 +136,9 @@ const CONSOLE_BOOL = true;
      * Function to create child and add it to database
      */
      createChild() {
-        console.log("Creating Child");
-        console.log(this.querySelector("#add-child-input").value);
-        console.log(this.querySelector("#birthdate-input").value);
+        if (CONSOLE_BOOL) {
+            console.log("Creating Child");
+        }
         let child_name = this.querySelector("#add-child-input").value;
         let birth_date = this.querySelector("#birthdate-input").value;
 
@@ -151,7 +151,6 @@ const CONSOLE_BOOL = true;
             .then(response => response.json()) // Convert response to JSON
             // Run the anonymous function on the received JSON response
             .then(function(response) {
-                console.log("reload now")
                 window.location.href=window.location.href
             });
     }

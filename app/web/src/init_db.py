@@ -105,9 +105,9 @@ db.commit()
 # Insert Records of chore options
 query = "insert into username_chore_options (chore_name, chore_points, status) values (%s, %s, %s)"
 values = [
-  ('Take Out Trash', '10', 'NULL'),
+  ('Take Out Trash', '10', '0%'+' Full'),
   ('Do Your Homework', '10', 'NULL'),
-  ('Make Your Bed', '10', 'NULL'),
+  ('Make Your Bed', '10', 'Not Done'),
   ('Clean Your Room', '10', 'NULL'),
   ('Do The Dishes', '20', 'NULL'),
   ('Do Your Laundry', '20', 'NULL'),

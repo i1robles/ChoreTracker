@@ -39,20 +39,24 @@ class MenuList extends HTMLElement {
         o_nav_list.classList.add("menu_list_links");
         
         let o_link_one = document.createElement("a");
-        o_link_one.setAttribute('href', "/");
-        o_link_one.innerHTML = "Home";
+        o_link_one.setAttribute('href', "main");
+        o_link_one.innerHTML = "Main Page";
 
         let o_link_two = document.createElement("a");
-        o_link_two.setAttribute('href', "product");
-        o_link_two.innerHTML = "Product Page";
+        o_link_two.setAttribute('href', "points");
+        o_link_two.innerHTML = "Points";
 
         let o_link_three = document.createElement("a");
-        o_link_three.setAttribute('href', "kvp");
-        o_link_three.innerHTML = "Key Value Proposition";
+        o_link_three.setAttribute('href', "backlog");
+        o_link_three.innerHTML = "Backlog";
 
         let o_link_four = document.createElement("a");
-        o_link_four.setAttribute('href', "team");
-        o_link_four.innerHTML = "Meet the Team";
+        o_link_four.setAttribute('href', "account");
+        o_link_four.innerHTML = "Account";
+        
+        let o_link_five = document.createElement("a");
+        o_link_four.setAttribute('href', "/");
+        o_link_four.innerHTML = "Sign Out";
         
         // footer link at bottom of menu
         let o_menu_footer = document.createElement("footer");
