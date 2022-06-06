@@ -245,7 +245,7 @@ def get_trash(req):
   data = req.matchdict['chore_data']
   #Add garbage can height in cm
   can_height = 57.5
-  final = str(int(round(float(data)/can_height, 2)*100)) + "%" + " Full"
+  final = str(int(100 - round(float(data)/can_height, 2)*100)) + "%" + " Full"
   print(final)
   # Connect to the database
   db = mysql.connect(host=db_host, user=db_user, passwd=db_pass, database=db_name)
